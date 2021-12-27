@@ -1,0 +1,100 @@
+[
+    {
+      "model": "movie.genre",
+      "pk": 1,
+      "fields": {
+        "fname": "تاریخی"
+      }
+    },
+    {
+        "model": "movie.genre",
+        "pk": 2,
+        "fields": {
+          "fname": "خانوادگی"
+        }
+      },
+      {
+        "model": "movie.genre",
+        "pk": 3,
+        "fields": {
+          "fname": "کمدی"
+        }
+      },
+      {
+        "model": "movie.genre",
+        "pk": 4,
+        "fields": {
+          "fname": "فیلم تئاتر"
+        }
+      },
+      {
+        "model": "movie.genre",
+        "pk": 5,
+        "fields": {
+          "fname": "وحشت"
+        }
+      },
+      {
+        "model": "movie.genre",
+        "pk": 6,
+        "fields": {
+          "fname": "فیلم کوتاه"
+        }
+      },
+      {
+        "model": "movie.genre",
+        "pk": 7,
+        "fields": {
+          "fname": "کنسرت"
+        }
+      },
+      {
+        "model": "movie.genre",
+        "pk": 8,
+        "fields": {
+          "fname": "اکشن"
+        }
+      },
+      {
+        "model": "movie.genre",
+        "pk": 9,
+        "fields": {
+          "fname": "عاشقانه"
+        }
+      },
+      {
+        "model": "movie.genre",
+        "pk": 10,
+        "fields": {
+          "fname": "مستند"
+        }
+      },
+      {
+        "model": "movie.genre",
+        "pk": 11,
+        "fields": {
+          "fname": "انیمیشن"
+        }
+      },
+      {
+        "model": "movie.genre",
+        "pk": 12,
+        "fields": {
+          "fname": "علمی تخیلی"
+        }
+      },
+      {
+        "model": "movie.genre",
+        "pk": 13,
+        "fields": {
+          "fname": "تاک شو"
+        }
+      },
+      {
+        "model": "movie.genre",
+        "pk": 14,
+        "fields": {
+          "fname": "دوبله ترکی"
+        }
+      }
+]

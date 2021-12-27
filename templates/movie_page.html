@@ -1,0 +1,100 @@
+<!doctype html>
+{% load static %}
+<html lang="en">
+  <head>
+  	<title>Movies Review</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="stylesheet" href="../static/main/list.css">
+	<!-- <link rel="stylesheet" href="../static/main/style.css"> -->
+	<link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700' rel='stylesheet' type='text/css'>
+
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	
+	<link rel="stylesheet" href=  "{% static 'main/style.css' %%}">
+	<link rel="stylesheet" href=  "{% static 'navbar/scss/style.css'%}">
+	
+	<link rel="stylesheet" href=  "{% static 'main/main/style.css' %%}">
+	<link rel="stylesheet" href=  "{% static 'main/navbar/scss/style.css'%}">
+    <meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="stylesheet" href= "{% static 'movie_page/css/style.css' %}">
+	<link rel="stylesheet" href= "{% static 'movie_page/css/slick.css' %}">
+	<title>Author</title>
+	
+</head>
+
+<body>
+	<div class="container">
+		<nav class="navbar navbar-expand-lg ftco_navbar ftco-navbar-light" id="ftco-navbar">
+			<div class="container">
+
+				<form class="form-inline my-2 my-lg-0" action="{% url 'movie:search-results' %}" method="get">
+					<input class="form-control mr-sm-2" name = 'keywords' type="search" placeholder="Search" aria-label="Search">
+					<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+				</form>
+				
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="fa fa-bars"></span> Menu
+				</button>
+				<div class="collapse navbar-collapse" id="ftco-nav">
+					<ul class="navbar-nav ml-auto mr-md-3">
+						<li class="nav-item active"><a href="/movie/list/" class="nav-link">Home</a></li>
+						<li class="nav-item"><a href="/movie/list/" class="nav-link">Movies</a></li>
+						<li class="nav-item"><a href="/movie/list/" class="nav-link">Genrers</a></li>
+					</ul>
+				</div>
+		    </div>
+		</nav>
+
+        <!-- Top banner -->
+
+
+
+		<div class="card  mb-3" >
+			<div class="row no-gutters">
+				<div class="col-auto">
+					<img src = {{movie.image_url}} class="img-fluid" alt="">
+				</div>
+				<div class="col">
+					<div class="card-block px-2">
+						<h4 class="card-title text-right" dir="rtl" >{{movie.ename}}</h4>
+						<p class="card-text text-right" dir="rtl" >{{movie.summary}}</p>
+						{% comment %} <a href="#" class="btn btn-primary">BUTTON</a> {% endcomment %}
+					</div>
+				</div> 
+			</div>
+			<div class="card-footer w-100 text-muted">
+				{% comment %} Footer stating cats are CUTE little animals {% endcomment %}
+			</div>
+	  </div >
+
+
+		{%for comment in movie.comment_movie.all%}
+		<div class="card" style="height: 7rem;">
+			<div class="card-header text-right" dir="rtl" >
+			  {{ comment.date}}
+			</div>
+			<div class="card-body">
+			  <blockquote class="blockquote mb-0  text-right" dir="rtl" >
+				<p>{{ comment.text }}</p>
+				{% comment %} <footer class="blockquote-footer"> {{ comment.vote_up}} <cite title="Source Title">{{ comment.vote_down }}</cite></footer> {% endcomment %}
+			  </blockquote>
+			</div>
+		  </div>
+
+        {% endfor %}
+
+
+
+
+		
+       
+        <!-- Scripts -->
+        <script src="{% static 'movie_page/js/jquery.min.js' %}"></script>
+        <script src="{% static 'movie_page/js/slick.min.js' %}"></script>
+        <script src="{% static 'movie_page/js/main.js' %}"></script>
+    
+
+    </body>
+    </html>
