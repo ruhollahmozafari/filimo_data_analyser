@@ -69,13 +69,6 @@ class FilimoLinksSpider(scrapy.Spider):
         comments = response.css('li.comment-item.clearfix')
         for comment in comments: #TODO spoiler commetns
             text=comment.css('div.comment-left-side div.comment-body p.comment-content::text').get()
-
-            # if len(text) < 1 :
-            #     text = comment.css('div.comment-left-side div.comment-body p.comment-content.is-spoil::text').get()
-
-            #     print('yesassssssssssssssssssssssssssssssssssssssssssssssss\n\n\n\n')
-            # print('texing ******************** : ', text)
-
                 
             c = Comment.objects.create(
                 movie=movie_obj,

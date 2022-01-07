@@ -18,6 +18,7 @@ class MovieDocument(Document):
         model = Movie # The model associated with this Document
 
         fields = [
+            'id',
             'fname',
             'ename',
             'summary',
@@ -26,7 +27,8 @@ class MovieDocument(Document):
             'imdb_rating',
             'filimo_rating',
             'filimo_total_votes',
-        ]
+            'image_url']
+
 
 @registry.register_document
 class CommentDocument(Document):
