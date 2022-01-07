@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'movie',
     'scrapy_app',
     'django_elasticsearch_dsl',
+    'livereload',
 ] 
 
 MIDDLEWARE = [
@@ -51,6 +52,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'livereload.middleware.LiveReloadScript',
 ]
 
 ROOT_URLCONF = 'uni.urls'
