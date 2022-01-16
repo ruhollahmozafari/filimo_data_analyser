@@ -25,6 +25,7 @@
 </head>
 
 <body>
+
 	<div class="container">
 		<nav class="navbar navbar-expand-lg ftco_navbar ftco-navbar-light" id="ftco-navbar">
 			<div class="container">
@@ -50,7 +51,6 @@
         <!-- Top banner -->
 
 
-
 		<div class="card  mb-3" >
 			<div class="row no-gutters p-4">
 				<div class="col-4 d-flex justify-content-center align-items-center">
@@ -60,13 +60,20 @@
 					<div class="card-block px-5">
 						<h4 class="card-title text-center mt-2" dir="rtl" >{{movie.ename}}</h4>
 						<p class="card-text text-right" dir="rtl" style="font-size: .8rem;">{{movie.summary}}</p>
-						{% comment %} <a href="#" class="btn btn-primary">BUTTON</a> {% endcomment %}
+						imdb ratings :
+						{{movie.imdb_rating}}
+						
+						filimo_rating
+						{{movie.filimo_rating}}
+							
+						genres :
+						{% for genre in movie.genres.all %}
+						{{ genre.fname}}
+						{% endfor %}
+
 					</div>
 				</div> 
-			</div>
-			<div class="card-footer w-100 text-muted">
-				{% comment %} Footer stating cats are CUTE little animals {% endcomment %}
-			</div>
+
 	  </div >
 
 		{%for comment in movie.comment_movie.all%}
