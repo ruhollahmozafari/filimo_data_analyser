@@ -48,7 +48,7 @@ class Movie(models.Model):
        return comments
     
 class Comment(models.Model):
-    movie = models.ForeignKey(Movie, blank= True, null= True, on_delete=models.DO_NOTHING, related_name='comment_movie')
+    movie = models.ForeignKey(Movie, blank= True, null= True, on_delete=models.CASCADE, related_name='comment_movie')
 
     text = models.TextField(blank=True, null= True , max_length=1000)
     date = models.CharField(blank=True, null=True, max_length=  100)

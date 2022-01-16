@@ -1,3 +1,4 @@
+
 from django_elasticsearch_dsl import Document, fields
 from django_elasticsearch_dsl.registries import registry
 from elasticsearch_dsl import field
@@ -19,6 +20,8 @@ class MovieDocument(Document):
 
         fields = [
             'id',
+            'code',
+            'original_url',
             'fname',
             'ename',
             'summary',

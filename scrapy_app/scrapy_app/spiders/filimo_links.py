@@ -1,3 +1,4 @@
+from operator import ge
 from pprint import pprint
 import django
 from django.db.models.fields.related import RECURSIVE_RELATIONSHIP_CONSTANT
@@ -20,7 +21,7 @@ class FilimoLinksSpider(scrapy.Spider):
 
     def parse(self, response):
 
-        print('************* in parse method in spider ************* \n\n\n\n')
+        # print('************* in parse method in spider ************* \n\n\n\n')
 
         links = response.css(
             'div.item div.ds-movie-item.ui-mb-4x.ui-pt-2x a::attr(href)').getall()
@@ -33,7 +34,7 @@ class FilimoLinksSpider(scrapy.Spider):
 
 
         # # for page_number in range(1, 50):
-        print(f'page in number ***********{self.page_number}********* \n')
+        # print(f'page in number ***********{self.page_number}********* \n')
         self.page_number += 1
         next_page = f'https://www.filimo.com/cms/movie/loadmore/tagid/1000/more_type/infinity/show_serial_parent/1/perpage/200/page/{self.page_number}'
         if self.page_number > 50:  # with 200 movies per page and the movie number of 10,000
@@ -45,7 +46,7 @@ class FilimoLinksSpider(scrapy.Spider):
     
         raw_genre= response.css(' li.ui-ml-2x a.ui-btn.ui-btn-force-dark.ui-btn-small.ui-br-24.ui-pr-2x.ui-pl-2x.ui-pt-x.ui-pb-x.ui-bg-gray-20.details_poster-description-meta-link span::text').getall()
         genre_obj =Genre.objects.filter(fname__in =raw_genre )
-
+        
         movie_obj = Movie.objects.create(
             code=response.url[25:30],
             original_url=response.url,
@@ -61,13 +62,11 @@ class FilimoLinksSpider(scrapy.Spider):
             filimo_total_votes=response.xpath('//*[@id="rateCnt"]/text()').get(),
             image_url = response.xpath('/html/body/div[1]/main/div/div[1]/div/div[3]/div[1]/div[1]/div/div/div[1]/img/@data-src').get()
 
-            
-            # TODO get the genres later
         )
         movie_obj.genres.add(*genre_obj)
 
         comments = response.css('li.comment-item.clearfix')
-        for comment in comments: #TODO spoiler commetns
+        for comment in comments:
             text=comment.css('div.comment-left-side div.comment-body p.comment-content::text').get()
                 
             c = Comment.objects.create(
@@ -82,7 +81,6 @@ class FilimoLinksSpider(scrapy.Spider):
             )
             c.save()
 
-        # TODO check if more comments is there
         if response.css('div.center.loadmore-link button#comments-loadmore.request-link.comments-loadmore.is-ajax-button::text').get():
             next_comment_page = response.css('div.center.loadmore-link button#comments-loadmore.request-link.comments-loadmore.is-ajax-button::attr(data-href)').get()
             return Request(url=f'https://www.filimo.com{next_comment_page}', callback=self.parse_movie_comment, cb_kwargs=dict(movie_obj=movie_obj))
