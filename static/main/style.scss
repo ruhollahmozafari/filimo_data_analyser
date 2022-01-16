@@ -8,9 +8,74 @@ $main-red-rgb-015: rgba(189, 21, 11, 0.1) !default;
 $main-blue: #0076bd !default;
 $main-blue-rgb-015: rgba(0, 118, 189, 0.1) !default;
 
+@font-face {
+  font-family: "IRANYekanBlackFaNum";
+  font-style: normal;
+  font-weight: 400;
+  src: local("IRANYekanBlackFaNum"), local("IRANYekanBlackFaNum"),
+    url("../assets/fonts/IRANYekanBlackFaNum.ttf") format("truetype");
+  /* Modern Browsers */
+}
+@font-face {
+  font-family: "IRANYekanBoldFaNum";
+  font-style: normal;
+  font-weight: 400;
+  src: local("IRANYekanBoldFaNum"), local("IRANYekanBoldFaNum"),
+    url("../assets/fonts/IRANYekanBoldFaNum.ttf") format("truetype");
+  /* Modern Browsers */
+}
+@font-face {
+  font-family: "IRANYekanExtraBlackFaNum";
+  font-style: normal;
+  font-weight: 400;
+  src: local("IRANYekanExtraBlackFaNum"), local("IRANYekanExtraBlackFaNum"),
+    url("../assets/fonts/IRANYekanExtraBlackFaNum.ttf") format("truetype");
+  /* Modern Browsers */
+}
+@font-face {
+  font-family: "IRANYekanExtraBoldFaNum";
+  font-style: normal;
+  font-weight: 400;
+  src: local("IRANYekanExtraBoldFaNum"), local("IRANYekanExtraBoldFaNum"),
+    url("../assets/fonts/IRANYekanExtraBoldFaNum.ttf") format("truetype");
+  /* Modern Browsers */
+}
+@font-face {
+  font-family: "IRANYekanLightFaNum";
+  font-style: normal;
+  font-weight: 400;
+  src: local("IRANYekanLightFaNum"), local("IRANYekanLightFaNum"),
+    url("../assets/fonts/IRANYekanLightFaNum.ttf") format("truetype");
+  /* Modern Browsers */
+}
+@font-face {
+  font-family: "IRANYekanMediumFaNum";
+  font-style: normal;
+  font-weight: 400;
+  src: local("IRANYekanMediumFaNum"), local("IRANYekanMediumFaNum"),
+    url("../assets/fonts/IRANYekanMediumFaNum.ttf") format("truetype");
+  /* Modern Browsers */
+}
+@font-face {
+  font-family: "IRANYekanRegularFaNum";
+  font-style: normal;
+  font-weight: 400;
+  src: local("IRANYekanRegularFaNum"), local("IRANYekanRegularFaNum"),
+    url("../assets/fonts/IRANYekanRegularFaNum.ttf") format("truetype");
+  /* Modern Browsers */
+}
+@font-face {
+  font-family: "IRANYekanThinFaNum";
+  font-style: normal;
+  font-weight: 400;
+  src: local("IRANYekanThinFaNum"), local("IRANYekanThinFaNum"),
+    url("../assets/fonts/IRANYekanThinFaNum.ttf") format("truetype");
+  /* Modern Browsers */
+}
+
 /* This pen */
 body {
-	font-family: "Baloo 2", cursive;
+	font-family: "IRANYekanRegularFaNum" !important;
 	font-size: 16px;
 	color: #ffffff;
 	text-rendering: optimizeLegibility;

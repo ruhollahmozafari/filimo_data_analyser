@@ -52,14 +52,14 @@
 
 
 		<div class="card  mb-3" >
-			<div class="row no-gutters">
-				<div class="col-auto">
-					<img src = {{movie.image_url}} class="img-fluid" alt="">
+			<div class="row no-gutters p-4">
+				<div class="col-4 d-flex justify-content-center align-items-center">
+					<img src = {{movie.image_url}} class="img-fluid" alt="" style="width: 12rem;">
 				</div>
-				<div class="col">
-					<div class="card-block px-2">
-						<h4 class="card-title text-right" dir="rtl" >{{movie.ename}}</h4>
-						<p class="card-text text-right" dir="rtl" >{{movie.summary}}</p>
+				<div class="col-7">
+					<div class="card-block px-5">
+						<h4 class="card-title text-center mt-2" dir="rtl" >{{movie.ename}}</h4>
+						<p class="card-text text-right" dir="rtl" style="font-size: .8rem;">{{movie.summary}}</p>
 						{% comment %} <a href="#" class="btn btn-primary">BUTTON</a> {% endcomment %}
 					</div>
 				</div> 
@@ -68,7 +68,6 @@
 				{% comment %} Footer stating cats are CUTE little animals {% endcomment %}
 			</div>
 	  </div >
-
 
 		{%for comment in movie.comment_movie.all%}
 		<div class="card" style="height: 7rem;">
