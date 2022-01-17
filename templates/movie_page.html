@@ -40,9 +40,16 @@
 				</button>
 				<div class="collapse navbar-collapse" id="ftco-nav">
 					<ul class="navbar-nav ml-auto mr-md-3">
-						<li class="nav-item active"><a href="/list/" class="nav-link">Home</a></li>
-						<li class="nav-item"><a href="/list/" class="nav-link">Movies</a></li>
-						<li class="nav-item"><a href="/list/" class="nav-link">Genrers</a></li>
+						<li class="nav-item active">
+							<!-- <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+								<path d="M3 9L12 2L21 9V20C21 20.5304 20.7893 21.0391 20.4142 21.4142C20.0391 21.7893 19.5304 22 19 22H5C4.46957 22 3.96086 21.7893 3.58579 21.4142C3.21071 21.0391 3 20.5304 3 20V9Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+								<path d="M9 22V12H15V22" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+							</svg> -->
+							<a href="/list/" class="nav-link">Home</a>
+						</li>
+						<li class="nav-item">
+							<a href="/list/" class="nav-link">Movies</a>
+						</li>
 					</ul>
 				</div>
 		    </div>
@@ -51,14 +58,14 @@
         <!-- Top banner -->
 
 
-		<div class="card  mb-3" >
-			<div class="row no-gutters p-4">
+		<div class="card   mb-3" style="border: none; border-radius: 10px;">
+			<div class="row no-gutters p-4" style="margin-bottom: 3rem;">
 				<div class="col-4 d-flex justify-content-center align-items-center">
-					<img src = {{movie.image_url}} class="img-fluid" alt="" style="width: 12rem;">
+					<img src = {{movie.image_url}} class="img-fluid" alt="" style="width: 12rem; border-radius: 10px;">
 				</div>
 				<div class="col-7">
 					<div class="card-block px-5">
-						<h4 class="card-title text-center mt-2" dir="rtl" >{{movie.ename}}</h4>
+						<h4 class="card-title text-center mt-2" style="color: #277AC0;" dir="rtl" >{{movie.ename}}</h4>
 						<p class="card-text text-right" dir="rtl" style="font-size: .8rem;">{{movie.summary}}</p>
 						imdb ratings :
 						{{movie.imdb_rating}}
@@ -70,6 +77,7 @@
 						{% for genre in movie.genres.all %}
 						{{ genre.fname}}
 						{% endfor %}
+						
 
 					</div>
 				</div> 
@@ -77,13 +85,15 @@
 	  </div >
 
 		{%for comment in movie.comment_movie.all%}
-		<div class="card" style="height: 7rem;">
-			<div class="card-header text-right" dir="rtl" >
+		<div class="card" style="margin: .2rem; border: none; border-bottom: 1px solid  #277AC0; border-radius: 0;">
+			<div class="card-header text-right" style="font-size: .6rem; margin: 0; padding: 0; border: none; background: #fff; color: #277AC0;" dir="rtl" >
 			  {{ comment.date}}
 			</div>
-			<div class="card-body">
-			  <blockquote class="blockquote mb-0  text-right" dir="rtl" >
-				<p>{{ comment.text }}</p>
+			<div class="card-body" style="padding: 0; margin: 0;">
+			  <blockquote class="blockquote mb-0  text-right" style="padding: 0; border: none;" dir="rtl" >
+				<p style="margin: 0; font-size: .8rem; padding-right: 1rem; ">
+					{{ comment.text }}
+				</p>
 				{% comment %} <footer class="blockquote-footer"> {{ comment.vote_up}} <cite title="Source Title">{{ comment.vote_down }}</cite></footer> {% endcomment %}
 			  </blockquote>
 			</div>

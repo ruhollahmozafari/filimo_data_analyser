@@ -38,7 +38,7 @@ class SearchResultView(ListView):
             fields=[
                 'fname',
                 'ename',
-            ])
+            ], fuzziness = 'AUTO')
         
         search = MovieDocument.search().query(q)
         resp =  search.execute()
