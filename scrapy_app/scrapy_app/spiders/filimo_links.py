@@ -20,6 +20,7 @@ class FilimoLinksSpider(scrapy.Spider):
     # get all movie links and save to db with their links
 
     def parse(self, response):
+        """find all movie page link and pass it to detail parsers"""
 
         # print('************* in parse method in spider ************* \n\n\n\n')
 
@@ -37,7 +38,7 @@ class FilimoLinksSpider(scrapy.Spider):
         # print(f'page in number ***********{self.page_number}********* \n')
         self.page_number += 1
         next_page = f'https://www.filimo.com/cms/movie/loadmore/tagid/1000/more_type/infinity/show_serial_parent/1/perpage/200/page/{self.page_number}'
-        if self.page_number > 50:  # with 200 movies per page and the movie number of 10,000
+        if self.page_number > 50:  # with 200 movies per page and the movie number of 10,000, which is the number of movies in fimilo
             return None
         yield Request(next_page, callback=self.parse)
 
@@ -63,8 +64,9 @@ class FilimoLinksSpider(scrapy.Spider):
             image_url = response.xpath('/html/body/div[1]/main/div/div[1]/div/div[3]/div[1]/div[1]/div/div/div[1]/img/@data-src').get()
 
         )
+        
         movie_obj.genres.add(*genre_obj)
-
+        # get comments in first loading of movie page
         comments = response.css('li.comment-item.clearfix')
         for comment in comments:
             text=comment.css('div.comment-left-side div.comment-body p.comment-content::text').get()
@@ -88,6 +90,7 @@ class FilimoLinksSpider(scrapy.Spider):
 
     # to get the comments that loads after pressing more comments in each movie page (if exitst)
     def parse_movie_comment(self, response, movie_obj):
+        """get all the comments for a movie page"""
         print('*********************** parse_movie_comment ******************** \n ')
 
         comments = response.css('li.comment-item.clearfix')
@@ -109,7 +112,3 @@ class FilimoLinksSpider(scrapy.Spider):
             return Request(url=f'https://www.filimo.com{next_comment_page}', callback=self.parse_movie_comment, cb_kwargs=dict(movie_obj=movie_obj))
         else:
             return None
-
-        # return Request(url='url', callback=self.parse_movie_comment) if response.css('').get() else None
-
-

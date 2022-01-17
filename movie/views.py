@@ -45,8 +45,6 @@ class SearchResultView(ListView):
         # object_list = Movie.objects.filter(Q (ename__icontains=self.keyword) 
         # | Q(fname__icontains = self.keyword)).order_by('id')
         
-        print('resp is ',resp.hits)
-        [print(type(hit)) for hit in resp.hits]
         return resp.hits
 
 class MoviePageView(DetailView):

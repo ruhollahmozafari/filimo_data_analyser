@@ -7,7 +7,7 @@ class Genre(models.Model):#TODO load initial data later
     fname = models.CharField(max_length=100, blank=True,
                              null=True, help_text='pesian name if exist')
     ename = models.CharField(max_length=100, blank=True,
-                             null=True, help_text='pesian name if exist')
+                             null=True, help_text='english name if exist')
     def __str__(self) -> str:
         return self.fname
         
@@ -49,7 +49,6 @@ class Movie(models.Model):
     
 class Comment(models.Model):
     movie = models.ForeignKey(Movie, blank= True, null= True, on_delete=models.CASCADE, related_name='comment_movie')
-
     text = models.TextField(blank=True, null= True , max_length=1000)
     date = models.CharField(blank=True, null=True, max_length=  100)
     vote_up = models.IntegerField(blank=True, null= True)
@@ -57,4 +56,3 @@ class Comment(models.Model):
     # start_testing = models.IntegerField(blank=True, null= True)
     def __str__(self) -> str:
         return self.text[:100] if self.text else f'comment'
-        # return 'comment'

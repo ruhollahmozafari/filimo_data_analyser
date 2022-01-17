@@ -26,7 +26,6 @@ class MovieDocument(Document):
             'ename',
             'summary',
             'description',
-            # 'genres',
             'imdb_rating',
             'filimo_rating',
             'filimo_total_votes',
@@ -51,6 +50,7 @@ class CommentDocument(Document):
         model = Comment # The model associated with this Document
 
         fields = [
+            'id',
             'text',
             'vote_up',
             'vote_down',
