@@ -107,6 +107,7 @@ class FilimoLinksSpider(scrapy.Spider):
                     'div.comment-left-side div.comment-info.clearfix div.rate.clearfix span.like button.request-link.like-item.thumbs-down.set-query.open-modal.is-ajax-button i.like-count::text').get(),
             )
             c.save()
+        
         if response.css('div.center.loadmore-link button#comments-loadmore.request-link.comments-loadmore.is-ajax-button::text').get():
             next_comment_page = response.css('div.center.loadmore-link button#comments-loadmore.request-link.comments-loadmore.is-ajax-button::attr(data-href)').get()
             return Request(url=f'https://www.filimo.com{next_comment_page}', callback=self.parse_movie_comment, cb_kwargs=dict(movie_obj=movie_obj))

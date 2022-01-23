@@ -2,10 +2,13 @@
 ### a djagno+scrapy project to collect over data of over 10,000 movie from the filimo.com website. 
 ## Installation
 after cloning, create an virtualenv and activate it by :
+` pip3 install virtualenv`
+and 
 
 ` virtualenv venv`
 
 `source venv/bin/activate`
+
 install the requirements by:
 
 `pip3 install -r requirements.txt`
