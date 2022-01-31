@@ -48,7 +48,7 @@
 
 	<div class="container">
 		<div class="row">
-		{% for movie in movies %}
+		{% for movie in movies%}
 			<div class="col-lg-2 mt-4">
 				<div class="profile-card-2 position-relative"> 
 					<a href="/detail/{{movie.id}}/">
@@ -66,8 +66,6 @@
 		</div>
 	</div>
 
-
-	{% include 'pagination.html' with page=page_obj %}
 
 	</body>
 </html>

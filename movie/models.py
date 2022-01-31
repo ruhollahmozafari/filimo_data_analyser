@@ -39,7 +39,7 @@ class Movie(models.Model):
     # year # though have the release date
     # google and imdb rating
     def __str__(self) -> str:
-        return self.ename if self.ename else self.fname
+        return f'{self.id} {self.ename}' if self.ename else self.fname
     def get_comments(self):
        comment_obj= self.comment_movie.all()
        comments = []

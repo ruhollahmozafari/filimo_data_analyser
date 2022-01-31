@@ -11,6 +11,7 @@ import os
 from movie.models import *
 from elasticsearch_dsl import Q as elastic_Q
 from .documents import MovieDocument
+from icecream import ic
 # Create your views here.
 class ListMovie(ListView):
     model = Movie
@@ -30,24 +31,30 @@ class SearchResultView(ListView):
     model = Movie
     template_name = 'search_result.html'
     context_object_name = 'movies'
+    paginate_by = 500
     def get_queryset(self):
         query = self.request.GET.get('keywords', None)
         q = elastic_Q(
             'multi_match',
             query=query,
             fields=[
-                'fname',
-                'ename',
-            ], fuzziness = 'AUTO')
+            'ename',
+            'fname'])
         
-        search = MovieDocument.search().query(q)
+        search = MovieDocument.search()[0:200].query(q)
         resp =  search.execute()
-        # object_list = Movie.objects.filter(Q (ename__icontains=self.keyword) 
-        # | Q(fname__icontains = self.keyword)).order_by('id')
-        
+        ic(resp.hits.total)
+        ic(len(resp.hits))
         return resp.hits
 
+        # object_list = Movie.objects.filter(Q (ename__icontains=query) 
+        # | Q(fname__icontains = query)).order_by('id')
+        # return object_list
+
+
+
 class MoviePageView(DetailView):
+
 
     model = Movie
     template_name = 'movie_page.html'

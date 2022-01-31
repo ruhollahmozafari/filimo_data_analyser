@@ -6,23 +6,20 @@ django.setup()
 import scrapy
 from scrapy.http import Request, request
 from movie.models import Movie, Comment, Genre
-
+from icecream import ic
 
 class FilimoLinksSpider(scrapy.Spider):
+    type = 1 # type 0 is for movie and 1 is for series, it will be used in downloading pages
     name = 'filimo_links'
     # allowed_domains = ['https://www.filimo.com/']
-    start_urls = ['https://www.filimo.com/movies/']  # the main page
+    main_url = 'https://www.filimo.com/cms/movie/loadmore/tagid/1000/more_type/infinity/show_serial_parent/1/perpage/200/page/'
+    start_urls = [main_url.replace('1000', '1001'), main_url] # 1000 is for movie , 1001 is for series
     page_number = 0
-
-    # the page with loading more data
-    # start_urls = ['https://www.filimo.com/cms/movie/loadmore/tagid/1000/more_type/infinity/show_serial_parent/1/perpage/200/page/1']
-
-    # get all movie links and save to db with their links
 
     def parse(self, response):
         """find all movie page link and pass it to detail parsers"""
 
-        # print('************* in parse method in spider ************* \n\n\n\n')
+        print('************* in parse method in spider ************* \n\n\n\n')
 
         links = response.css(
             'div.item div.ds-movie-item.ui-mb-4x.ui-pt-2x a::attr(href)').getall()
@@ -35,12 +32,17 @@ class FilimoLinksSpider(scrapy.Spider):
 
 
         # # for page_number in range(1, 50):
-        # print(f'page in number ***********{self.page_number}********* \n')
+        print(f'page in number ***********{self.page_number}********* \n')
         self.page_number += 1
-        next_page = f'https://www.filimo.com/cms/movie/loadmore/tagid/1000/more_type/infinity/show_serial_parent/1/perpage/200/page/{self.page_number}'
-        if self.page_number > 50:  # with 200 movies per page and the movie number of 10,000, which is the number of movies in fimilo
+        next_page = self.url + str(self.page_number)
+        max_page_number = 55 if '1000' in self.url else 10
+        ic(max_page_number)
+        for _ in range(max_page_number):
+            yield Request(next_page, callback=self.parse)
+
+        if self.page_number > 55:  # with 200 movies per page and the movie number of 10,000, which is the number of movies in fimilo
             return None
-        yield Request(next_page, callback=self.parse)
+
 
     def parse_movie_page(self, response):
         print('************* in parse movie page ********************\n\n\n\n ')
@@ -108,8 +110,13 @@ class FilimoLinksSpider(scrapy.Spider):
             )
             c.save()
         
-        if response.css('div.center.loadmore-link button#comments-loadmore.request-link.comments-loadmore.is-ajax-button::text').get():
-            next_comment_page = response.css('div.center.loadmore-link button#comments-loadmore.request-link.comments-loadmore.is-ajax-button::attr(data-href)').get()
+        if len(other_episode_comments := response.css('button#parentComments.request-link.comments-loadmore.ui-pt-2x.ui-pb-2x.ui-pr-3x.ui-pl-3x.pointer.ui-fc-white.is-ajax-button::attr(data-href)').getall())> 0:
+            for link in other_episode_comments:
+                yield Request(url=f'{link}', callback=self.parse_movie_comment, cb_kwargs=dict(movie_obj=movie_obj))
+
+        if  (next_comment_page := response.css('div.center.loadmore-link button#comments-loadmore.request-link.comments-loadmore.is-ajax-button::attr(data-href)').get()):
             return Request(url=f'https://www.filimo.com{next_comment_page}', callback=self.parse_movie_comment, cb_kwargs=dict(movie_obj=movie_obj))
         else:
             return None
+
+
