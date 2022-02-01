@@ -27,7 +27,7 @@
 <body>
 	<div class="container">
 		<nav class="navbar navbar-expand-lg ftco_navbar ftco-navbar-light" id="ftco-navbar">
-			<div class="container">
+			<div class="container d-flex justify-content-between">
 				<form class="d-flex position-relative" action="{% url 'movie:search-results' %}" method="get">
 					<input class="py-2 px-4" style="width: 17rem; border: 1px solid #00B4A8; border-radius: 40px;" name = 'keywords' type="search" placeholder="جستجو" aria-label="Search">
                     <button class="position-absolute" style="bottom: .4rem; left: .5rem; background: #fff; border: none; color: #00B4A8;" type="submit">
@@ -73,18 +73,42 @@
 				</div>
 				<div class="col-7">
 					<div class="card-block px-5">
-						<h4 class="card-title text-center mt-2" style="color: #277AC0;" dir="rtl" >{{movie.ename}}</h4>
+						<h4 class="card-title text-center mt-2" style="color: #00B4A8;" dir="rtl" >{{movie.ename}}</h4>
 						<p class="card-text text-right" dir="rtl" style="font-size: .8rem;">{{movie.summary}}</p>
-						imdb ratings :
-						{{movie.imdb_rating}}
-						
-						filimo_rating
-						{{movie.filimo_rating}}
+                        <div class="d-flex align-items-baseline">
+                        <p style="background: #00B4A8;  width: .5rem; height: .5rem; border-radius: 50px"></p>
+                            <p class="m-0 ps-1 pe-3">عنوان</p>
+                            <p class="m-0">	{{movie.imdb_rating}}</p>
+                        </div>
+                        <div class="d-flex  align-items-baseline">
+                              <p style="background: #00B4A8;  width: .5rem; height: .5rem; border-radius: 50px"></p>
+                            <p class="m-0 ps-1 pe-3">امتیازات تست</p>
+                            <p class="m-0">	
+                                					{{movie.filimo_rating}}
+                            </p>
+                        </div>
+                        
+                        <div class="d-flex align-items-baseline">
+                            <p style="background: #00B4A8;  width: .5rem; height: .5rem; border-radius: 50px"></p>
+                            <p class="m-0 ps-1 pe-3">ژژژانر تست</p>
+                            <p class="m-0">	
+                                {% for genre in movie.genres.all %}
+                                {{ genre.fname}}
+                                {% endfor %}    		
+                            </p>
+                        </div>
+
+
+                    {% comment %} detaills {% endcomment %}
+					<div class="d-flex align-items-baseline">
+                        <p style="background: #00B4A8;  width: .5rem; height: .5rem; border-radius: 50px"></p>
+                        <p class="m-0 ps-1 pe-3">تعداد کامنت اان</p>
+                        <p class="m-0">	data</p>
+                    </div>
+					
 							
-						genres :
-						{% for genre in movie.genres.all %}
-						{{ genre.fname}}
-						{% endfor %}
+				
+					
 						
 
 					</div>
@@ -92,11 +116,13 @@
 
 	  </div >
 
+      <p style="text-align: right;">نظرات کاربران</p>
+
 		{%for comment in movie.comment_movie.all%}
 
 
 		
-		<div class="d-flex justify-content-start w-100 p-2" style="border: 1px solid #00B4A8; border-radius: 40px;">
+		<div class="d-flex justify-content-start w-100 p-2 m-2" style="border: 1px solid #00B4A8; border-radius: 40px;">
             <div class="d-flex justify-content-center align-items-center" style="width: 37px; height: 35px; background: #D1D1D3; border-radius: 50px; margin: 10px 10px; ">
                 <svg width="25" height="25" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M18 19V17.3333C18 16.4493 17.6839 15.6014 17.1213 14.9763C16.5587 14.3512 15.7956 14 15 14H9C8.20435 14 7.44129 14.3512 6.87868 14.9763C6.31607 15.6014 6 16.4493 6 17.3333V19" stroke="#57575E" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
@@ -124,10 +150,12 @@
                         </svg>
                     </p>
                 </div>
-                <p class="m-0" text-end> {{ comment.text }}</p>
+                <p class="m-0" style="padding:  0 1rem; text-align: right;"> {{ comment.text }}</p>
+                {{comment.vote_up}} : vote_up 
+                {{comment.vote_down}} : vote_down
             </div>
         </div>
-		{% endfor %} -->
+		{% endfor %} 
 
         <!-- Scripts -->
         <script src="{% static 'movie_page/js/jquery.min.js' %}"></script>

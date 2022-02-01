@@ -104,6 +104,7 @@ DATABASES = {
         'NAME': BASE_DIR / 'db1.sqlite',
     }
 }
+
 ELASTICSEARCH_DSL = {
     "default": {
         "hosts": "localhost:9200/",
