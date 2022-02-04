@@ -112,7 +112,7 @@ input[type=checkbox]:not(old) + label > span{
   background-image :         linear-gradient(rgb(255,255,255),rgb(255,255,255 ));
   vertical-align   : bottom;
 }
-input[type=checkbox]:not(old):checked + label > span,{
+input[type=checkbox]:not(old):checked + label > span{
     background-image :    -moz-linear-gradient(rgb(255,255,255),rgb(255,255,255));
     background-image :     -ms-linear-gradient(rgb(255,255,255),rgb(255,255,255));
     background-image :      -o-linear-gradient(rgb(255,255,255),rgb(255,255,255));

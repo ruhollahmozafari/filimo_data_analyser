@@ -1,3 +1,87 @@
+@import url("https://fonts.googleapis.com/css2?family=Baloo+2&display=swap");
+$main-green: #79dd09 !default;
+$main-green-rgb-015: rgba(121, 221, 9, 0.1) !default;
+$main-yellow: #bdbb49 !default;
+$main-yellow-rgb-015: rgba(189, 187, 73, 0.1) !default;
+$main-red: #bd150b !default;
+$main-red-rgb-015: rgba(189, 21, 11, 0.1) !default;
+$main-blue: #0076bd !default;
+$main-blue-rgb-015: rgba(0, 118, 189, 0.1) !default;
+
+@font-face {
+  font-family: "IRANYekanBlackFaNum";
+  font-style: normal;
+  font-weight: 400;
+  src: local("IRANYekanBlackFaNum"), local("IRANYekanBlackFaNum"),
+    url("../assets/fonts/IRANYekanBlackFaNum.ttf") format("truetype");
+  /* Modern Browsers */
+}
+@font-face {
+  font-family: "IRANYekanBoldFaNum";
+  font-style: normal;
+  font-weight: 400;
+  src: local("IRANYekanBoldFaNum"), local("IRANYekanBoldFaNum"),
+    url("../assets/fonts/IRANYekanBoldFaNum.ttf") format("truetype");
+  /* Modern Browsers */
+}
+@font-face {
+  font-family: "IRANYekanExtraBlackFaNum";
+  font-style: normal;
+  font-weight: 400;
+  src: local("IRANYekanExtraBlackFaNum"), local("IRANYekanExtraBlackFaNum"),
+    url("../assets/fonts/IRANYekanExtraBlackFaNum.ttf") format("truetype");
+  /* Modern Browsers */
+}
+@font-face {
+  font-family: "IRANYekanExtraBoldFaNum";
+  font-style: normal;
+  font-weight: 400;
+  src: local("IRANYekanExtraBoldFaNum"), local("IRANYekanExtraBoldFaNum"),
+    url("../assets/fonts/IRANYekanExtraBoldFaNum.ttf") format("truetype");
+  /* Modern Browsers */
+}
+@font-face {
+  font-family: "IRANYekanLightFaNum";
+  font-style: normal;
+  font-weight: 400;
+  src: local("IRANYekanLightFaNum"), local("IRANYekanLightFaNum"),
+    url("../assets/fonts/IRANYekanLightFaNum.ttf") format("truetype");
+  /* Modern Browsers */
+}
+@font-face {
+  font-family: "IRANYekanMediumFaNum";
+  font-style: normal;
+  font-weight: 400;
+  src: local("IRANYekanMediumFaNum"), local("IRANYekanMediumFaNum"),
+    url("../assets/fonts/IRANYekanMediumFaNum.ttf") format("truetype");
+  /* Modern Browsers */
+}
+@font-face {
+  font-family: "IRANYekanRegularFaNum";
+  font-style: normal;
+  font-weight: 400;
+  src: local("IRANYekanRegularFaNum"), local("IRANYekanRegularFaNum"),
+    url("../assets/fonts/IRANYekanRegularFaNum.ttf") format("truetype");
+  /* Modern Browsers */
+}
+@font-face {
+  font-family: "IRANYekanThinFaNum";
+  font-style: normal;
+  font-weight: 400;
+  src: local("IRANYekanThinFaNum"), local("IRANYekanThinFaNum"),
+    url("../assets/fonts/IRANYekanThinFaNum.ttf") format("truetype");
+  /* Modern Browsers */
+}
+
+/* This pen */
+body {
+	font-family: "IRANYekanRegularFaNum" !important;
+	font-size: 16px;
+	color: #ffffff;
+	text-rendering: optimizeLegibility;
+	font-weight: initial;
+}
+ 
  a:focus, a:active { text-decoration: none; outline: none; @include transition(all 300ms ease 0s); }
 input, select, textarea { outline: none; @include appearance( unset ); }
 input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
@@ -23,15 +107,7 @@ h2 {
     background: #f8f8f8;
     padding: 150px 0;
 }
-.clear { clear: both; }
-body {
-	font-size: 13px;
-    line-height: 1.8;
-    color: $black-color;
-    background: #f8f8f8;
-    font-weight: 400;
-    font-family: Poppins;
-}
+// .clear { clear: both; }
 .container {
     width: 900px;
     background: #fff;

@@ -1,10 +1,7 @@
-from operator import ge
-from pprint import pprint
 import django
-from django.db.models.fields.related import RECURSIVE_RELATIONSHIP_CONSTANT
 django.setup()
 import scrapy
-from scrapy.http import Request, request
+from scrapy.http import Request
 from movie.models import Movie, Comment, Genre
 from icecream import ic
 
