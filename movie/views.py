@@ -1,4 +1,5 @@
 from http.client import HTTPResponse
+from tkinter import E
 from django.shortcuts import render
 from django.views.generic import ListView, DeleteView
 from django.db.models import Q
@@ -65,25 +66,47 @@ class MoviePageView(DetailView):
     model = Movie
     template_name = 'movie_page.html'
     context_object_name = 'movie'
-    def get_polarity(self,):
+    def get_polarity(self,movie):
         ic()
-        movie = Movie.objects.get( id = 10080)
+        result = {-1:0, -0.5 : 0 , 0:0, 0.5:0, 1:0}
+        points = [-1, -0.5, 0, 0.5, 1 ]
+        estring = ''
         for comment in movie.comment_movie.all(): #TODO: optimize the comment ot happen in just one request for translation and not for all 
             ic() 
-            translation = translator.translate(comment.text, dest ="en", src="fa")
-            comment_polarity = TextBlob(translation.text).sentiment.polarity
+            estring += comment.text + '@' # put all the commens text in one string to translate and separte them with @ 
+        translation = translator.translate(estring , dest ="en", src="fa")
+        ecomments = translation.text.split('@')
+        for indexer, comment in enumerate(movie.comment_movie.all()):
+            ic(comment)
+            comment_polarity = TextBlob(ecomments[indexer]).sentiment.polarity
+            for indx in range(4):
+                if  points[indx] < comment_polarity <= points[indx+1]:
+                    result[points[indx+1]]+=1
+                    ic()
+                    break
             comment.polarity = comment_polarity
-            comment.e_text = translation.text
+            comment.e_text = ecomments[indexer]
             comment.save()
-        ic()
-        return HTTPResponse ('this is the reposne')
+            ic()
+        # end of getting sentiment for each comment , now  get an average of them based on the number and like and dislike
+        movie.sentiment = sum([k*v for k,v in result.items()]) / sum([i for i in result.values()]) # get a total average of sentiments 
+        movie.sentiment_detail = result
+        movie.save()
+        return None
 
     def get_queryset(self):
         object_list = Movie.objects.filter(id = self.kwargs['pk'])
         return object_list
     
     def get(self, request , *args, **kwargs):
-        self.get_polarity(Movie.objects.get(id = kwargs['pk']) )
+        movie = Movie.objects.get(id = kwargs['pk'])
+        if  movie.sentiment == None:
+            self.get_polarity(movie)
+            ic('goin for the sentiment ')
+        else:
+            self.get_polarity(movie)
+            ic('passing the sentiment since it is full ')
+            pass 
         return super().get(request, *args, **kwargs)
 
 

@@ -2,10 +2,11 @@ from os import name
 
 from django.urls import path, include
 from user.views import *
-
+from rest_framework.authtoken.views import obtain_auth_token
 app_name='user' 
 
 urlpatterns = [
+    path('api-token-auth/', obtain_auth_token, name='api_token_auth'),
     path("home/", home, name = 'home'),
     # path("login/", UserLoginApiView.as_view()),
     # path("forgotpass/", ForgotPassView.as_view()),

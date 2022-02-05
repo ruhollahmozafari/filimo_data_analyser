@@ -1,7 +1,10 @@
+from pydoc import resolve
 from statistics import mode
+from unittest import result
 from django.db import models
 from django.db.models.base import ModelState
 from django.db.models.fields import TextField
+from icecream import ic
 
 
 class Genre(models.Model):#TODO load initial data later 
@@ -30,8 +33,21 @@ class Movie(models.Model):
     imdb_rating = models.FloatField(blank= True , null= True)  # TODO Check if rating must be based on filimo or imdb
     filimo_rating = models.FloatField(blank= True , null= True)  # TODO Check if rating must be based on filimo or imdb
     filimo_total_votes = models.BigIntegerField(blank= True , null= True)  # TODO Check if rating must be based on filimo or imdb
-    
-    
+    sentiment = models.FloatField(blank= True , null= True, help_text= 'final number of sentiment analysis based on the comments')
+    sentiment_detail = models.JSONField(blank= True, null= True, help_text='this is for the number of each point [-1, 0.5, 0. 0.5 , 1] based on the number of comments')
+    # def overall_sentiment(self):
+    #     result = {-1:0, -0.5 : 0 , 0:0, 0.5:0, 1:0}
+    #     points = [-1, -0.5, 0, 0.5, 1 ]
+    #     for c in self.comment_movie.all():
+    #         for indexer in range(4):
+    #             if  points[indexer] < c.polarity <= points[indexer+1]:
+    #                 result[indexer+1]
+    #                 ic()
+    #                 break
+    #         ic()
+        
+    #     return result
+
     # note : rate for tvshow are for all episode and seson not just one episode or season
 
     # fields that can ad later

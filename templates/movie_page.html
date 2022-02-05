@@ -72,22 +72,8 @@
           </div>
 
              <div class="col-4">
+                 
                 <h4 class="card-title text-right mt-2" style="color: #00B4A8; font-weight: bold;" dir="rtl" >{{movie.ename}}</h4>
-                <div class="d-flex align-items-baseline">
-                    <p style="background: #00B4A8;  width: .5rem; height: .5rem; border-radius: 50px"></p>
-                    <p style="font-size: .8rem" class="m-0 ps-1 pe-3">تیتر دیتا</p>
-                    <p style="font-size: .8rem" class="m-0">{{movie.imdb_rating}}</p>
-                </div>
-                <div class="d-flex  align-items-baseline">
-                    <p style="background: #00B4A8;  width: .5rem; height: .5rem; border-radius: 50px"></p>
-                    <p style="font-size: .8rem" class="m-0 ps-1 pe-3">تیتر دیتا</p>
-                    <p style="font-size: .8rem" class="m-0">{{movie.filimo_rating}}</p>
-                </div>
-                <div class="d-flex  align-items-baseline">
-                    <p style="background: #00B4A8;  width: .5rem; height: .5rem; border-radius: 50px"></p>
-                    <p style="font-size: .8rem" class="m-0 ps-1 pe-3">تعدادنظرات:</p>
-                    <p style="font-size: .8rem" class="m-0">datta por kon</p>
-                </div>
                 <div class="d-flex align-items-baseline">
                     <p style="background: #00B4A8;  width: .5rem; height: .5rem; border-radius: 50px"></p>
                     <p style="font-size: .8rem" class="m-0 ps-1 pe-3">ژانر فیلم:</p>
@@ -97,6 +83,33 @@
                         {% endfor %}    		
                     </p>
                 </div>
+                <div class="d-flex align-items-baseline">
+                    <p style="background: #00B4A8;  width: .5rem; height: .5rem; border-radius: 50px"></p>
+                    <p style="font-size: .8rem" class="m-0 ps-1 pe-3">نمره imdb</p>
+                    <p style="font-size: .8rem" class="m-0">{{movie.imdb_rating}}</p>
+                </div>
+                <div class="d-flex  align-items-baseline">
+                    <p style="background: #00B4A8;  width: .5rem; height: .5rem; border-radius: 50px"></p>
+                    <p style="font-size: .8rem" class="m-0 ps-1 pe-3">نمره فیلیمو</p>
+                    <p style="font-size: .8rem" class="m-0">{{movie.filimo_rating}}</p>
+                </div>
+                <div class="d-flex  align-items-baseline">
+                    <p style="background: #00B4A8;  width: .5rem; height: .5rem; border-radius: 50px"></p>
+                    <p style="font-size: .8rem" class="m-0 ps-1 pe-3">تعداد کل نظرات</p>
+                    <p style="font-size: .8rem" class="m-0">{{ movie.comment_movie.all.count}}</p>
+                </div>
+                <div class="d-flex  align-items-baseline">
+                    <p style="background: #00B4A8;  width: .5rem; height: .5rem; border-radius: 50px"></p>
+                    <p style="font-size: .8rem" class="m-0 ps-1 pe-3">مجموع نظرات کامنت ها</p>
+                    <p style="font-size: .8rem" class="m-0">{{movie.sentiment}}</p>
+                </div>
+                <div class="d-flex  align-items-baseline">
+                    <p style="background: #00B4A8;  width: .5rem; height: .5rem; border-radius: 50px"></p>
+                    <p style="font-size: .8rem" class="m-0 ps-1 pe-3">sentinet details</p>
+                    <p style="font-size: .8rem" class="m-0">{{ movie.sentiment_detail }}</p>
+                </div>
+
+                
           </div>
 
       </div>

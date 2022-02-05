@@ -76,12 +76,6 @@ TEMPLATES = [
 WSGI_APPLICATION = 'uni.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/3.1/ref/settings/#databases
-
-
-
-
 DATABASES = {
     "default": {
         # Postgres Postgis database engin class.
