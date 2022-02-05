@@ -1,3 +1,4 @@
+from statistics import mode
 from django.db import models
 from django.db.models.base import ModelState
 from django.db.models.fields import TextField
@@ -50,9 +51,12 @@ class Movie(models.Model):
 class Comment(models.Model):
     movie = models.ForeignKey(Movie, blank= True, null= True, on_delete=models.CASCADE, related_name='comment_movie')
     text = models.TextField(blank=True, null= True , max_length=1000)
+    e_text = models.TextField(blank=True, null= True , max_length=1000, help_text='english translated version')
     date = models.CharField(blank=True, null=True, max_length=  100)
     vote_up = models.IntegerField(blank=True, null= True)
     vote_down = models.IntegerField(blank=True, null= True)
+    polarity = models.FloatField(blank=True, null= True, help_text='this represent the sentiment analysis of this commnent -1 to 1 ')
+
     # start_testing = models.IntegerField(blank=True, null= True)
     def __str__(self) -> str:
         return self.text[:100] if self.text else f'comment'

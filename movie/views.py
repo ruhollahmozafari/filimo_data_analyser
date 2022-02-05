@@ -1,17 +1,23 @@
+from http.client import HTTPResponse
 from django.shortcuts import render
 from django.views.generic import ListView, DeleteView
 from django.db.models import Q
 from django.views.decorators.http import require_POST, require_http_methods
 from django.shortcuts import render
-from django.http import JsonResponse, response
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic.detail import DetailView
+from urllib3 import Retry
 from uni.settings import BASE_DIR
 import os
 from movie.models import *
 from elasticsearch_dsl import Q as elastic_Q
 from .documents import MovieDocument
 from icecream import ic
+from textblob import TextBlob
+from googletrans import Translator, constants
+translator = Translator()
+
+
 # Create your views here.
 class ListMovie(ListView):
     model = Movie
@@ -59,9 +65,27 @@ class MoviePageView(DetailView):
     model = Movie
     template_name = 'movie_page.html'
     context_object_name = 'movie'
-    # lookup_field = 'pk'
+    def get_polarity(self,):
+        ic()
+        movie = Movie.objects.get( id = 10080)
+        for comment in movie.comment_movie.all(): #TODO: optimize the comment ot happen in just one request for translation and not for all 
+            ic() 
+            translation = translator.translate(comment.text, dest ="en", src="fa")
+            comment_polarity = TextBlob(translation.text).sentiment.polarity
+            comment.polarity = comment_polarity
+            comment.e_text = translation.text
+            comment.save()
+        ic()
+        return HTTPResponse ('this is the reposne')
+
     def get_queryset(self):
         object_list = Movie.objects.filter(id = self.kwargs['pk'])
         return object_list
+    
+    def get(self, request , *args, **kwargs):
+        self.get_polarity(Movie.objects.get(id = kwargs['pk']) )
+        return super().get(request, *args, **kwargs)
+
+
 
 
