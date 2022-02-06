@@ -83,15 +83,14 @@ class MoviePageView(DetailView):
             for indx in range(4):
                 if  points[indx] < comment_polarity <= points[indx+1]:
                     result[points[indx+1]]+=1
-                    ic()
                     break
             comment.polarity = comment_polarity
             comment.e_text = ecomments[indexer]
             comment.save()
-            ic()
-            ic(comment)
-            ic(comment_polarity)
-            ic('----------------------')
+            # ic()
+            # ic(comment)
+            # ic(comment_polarity)
+            # ic('----------------------')
         # end of getting sentiment for each comment , now  get an average of them based on the number and like and dislike
         average_rating = sum([k*v for k,v in result.items()]) / sum([i for i in result.values()])
         movie.sentiment = int(round(average_rating, 3)*100)  # get a total average of sentiments 
