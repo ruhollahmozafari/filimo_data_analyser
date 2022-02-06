@@ -60,18 +60,18 @@ class FilimoLinksSpider(scrapy.Spider):
         comments = response.css('li.comment-item.clearfix')
         for comment in comments:
             text=comment.css('div.comment-left-side div.comment-body p.comment-content::text').get()
-                
-            c = Comment.objects.create(
-                movie=movie_obj,
-                text = text,
-                date=comment.css(
-                    'div.comment-left-side div.comment-info.clearfix span.comment-date::text').get(),
-                vote_up=comment.css(
-                    'div.comment-left-side div.comment-info.clearfix div.rate.clearfix span.like button.request-link.like-item.thumbs-up.set-query.open-modal.is-ajax-button i.like-count::text').get(),
-                vote_down=comment.css(
-                    'div.comment-left-side div.comment-info.clearfix div.rate.clearfix span.like button.request-link.like-item.thumbs-down.set-query.open-modal.is-ajax-button i.like-count::text').get(),
-            )
-            c.save()
+            if text not in ['\n', '', ' ']:                
+                c = Comment.objects.create(
+                    movie=movie_obj,
+                    text = text,
+                    date=comment.css(
+                        'div.comment-left-side div.comment-info.clearfix span.comment-date::text').get(),
+                    vote_up=comment.css(
+                        'div.comment-left-side div.comment-info.clearfix div.rate.clearfix span.like button.request-link.like-item.thumbs-up.set-query.open-modal.is-ajax-button i.like-count::text').get(),
+                    vote_down=comment.css(
+                        'div.comment-left-side div.comment-info.clearfix div.rate.clearfix span.like button.request-link.like-item.thumbs-down.set-query.open-modal.is-ajax-button i.like-count::text').get(),
+                )
+                c.save()
 
         if response.css('div.center.loadmore-link button#comments-loadmore.request-link.comments-loadmore.is-ajax-button::text').get():
             next_comment_page = response.css('div.center.loadmore-link button#comments-loadmore.request-link.comments-loadmore.is-ajax-button::attr(data-href)').get()
@@ -106,5 +106,6 @@ class FilimoLinksSpider(scrapy.Spider):
             return Request(url=f'https://www.filimo.com{next_comment_page}', callback=self.parse_movie_comment, cb_kwargs=dict(movie_obj=movie_obj))
         else:
             return None
+
 
 

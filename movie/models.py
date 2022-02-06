@@ -75,4 +75,4 @@ class Comment(models.Model):
 
     # start_testing = models.IntegerField(blank=True, null= True)
     def __str__(self) -> str:
-        return self.text[:100] if self.text else f'comment'
+        return str(self.id) + self.text[:100] if self.text else f'comment' 

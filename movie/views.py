@@ -71,8 +71,9 @@ class MoviePageView(DetailView):
         result = {-1:0, -0.5 : 0 , 0:0, 0.5:0, 1:0}
         points = [-1, -0.5, 0, 0.5, 1 ]
         estring = ''
-        for comment in movie.comment_movie.all(): #TODO: optimize the comment ot happen in just one request for translation and not for all 
+        for comment in movie.comment_movie.all(): 
             estring += comment.text + '@' # put all the commens text in one string to translate and separte them with @ 
+        print('this is the ')
         translation = translator.translate(estring , dest ="en", src="fa")
         ecomments = translation.text.split('@')
         print('this is the len of ecommnte s',len(ecomments))
