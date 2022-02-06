@@ -103,14 +103,46 @@
                     <p style="font-size: .8rem" class="m-0 ps-1 pe-3">مجموع نظرات کامنت ها</p>
                     <p style="font-size: .8rem" class="m-0">{{movie.sentiment}}</p>
                 </div>
+
+                ----------------------  rating details ------------------------------
+
+
                 <div class="d-flex  align-items-baseline">
                     <p style="background: #00B4A8;  width: .5rem; height: .5rem; border-radius: 50px"></p>
-                    <p style="font-size: .8rem" class="m-0 ps-1 pe-3">sentinet details</p>
-                    <p style="font-size: .8rem" class="m-0"> - 1 : {{ movie.sentiment }} / </p>
+                    <p style="font-size: .8rem" class="m-0 ps-1 pe-3">کامنت های بسیار بد </p>
+                    <p style="font-size: .8rem" class="m-0"> {{ movie.number_very_bad_comment }}  </p>
                 </div>
 
+                <div class="d-flex  align-items-baseline">
+                    <p style="background: #00B4A8;  width: .5rem; height: .5rem; border-radius: 50px"></p>
+                    <p style="font-size: .8rem" class="m-0 ps-1 pe-3">کامنت های بد</p>
+                    <p style="font-size: .8rem" class="m-0">{{ movie.number_bad_comment }} </p>
+                </div>
+
+                <div class="d-flex  align-items-baseline">
+                    <p style="background: #00B4A8;  width: .5rem; height: .5rem; border-radius: 50px"></p>
+                    <p style="font-size: .8rem" class="m-0 ps-1 pe-3">کامنت های بی طرف</p>
+                    <p style="font-size: .8rem" class="m-0"> {{ movie.number_of_zero_comment }}</p>
+                </div>
+
+                <div class="d-flex  align-items-baseline">
+                    <p style="background: #00B4A8;  width: .5rem; height: .5rem; border-radius: 50px"></p>
+                    <p style="font-size: .8rem" class="m-0 ps-1 pe-3">کامنت های خوب</p>
+                    <p style="font-size: .8rem" class="m-0">{{ movie.number_good_comment }}</p>
+                </div>
                 
-          </div>
+                <div class="d-flex  align-items-baseline">
+                    <p style="background: #00B4A8;  width: .5rem; height: .5rem; border-radius: 50px"></p>
+                    <p style="font-size: .8rem" class="m-0 ps-1 pe-3">کامنت های بسیار خوب</p>
+                    <p style="font-size: .8rem" class="m-0"> {{ movie.number_very_good_comment }} / </p>
+                </div>
+          
+          
+          
+            </div>
+
+
+
 
       </div>
       <p class="card-text text-right" dir="rtl" style="font-size: 1rem; padding: 0 10rem; margin-bottom: 4rem">{{movie.summary}}</p>
