@@ -430,3 +430,12 @@ a, a:hover {
 		);
 	}
 }
+
+
+.film-hover{
+  opacity: 0 !important;
+  transition: all .3s ease-in-out;
+  &:hover{
+    opacity: 1 !important;
+  }
+}

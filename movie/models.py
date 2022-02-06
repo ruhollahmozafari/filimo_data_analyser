@@ -63,7 +63,8 @@ class Movie(models.Model):
        for x in comment_obj:
            comments.append({'id': x.id, 'fname': x.fname, 'ename': x.ename})
        return comments
-    
+    def number_of_minus_one(self):
+        return self.sentiment_detail.get(-1,0)
 class Comment(models.Model):
     movie = models.ForeignKey(Movie, blank= True, null= True, on_delete=models.CASCADE, related_name='comment_movie')
     text = models.TextField(blank=True, null= True , max_length=1000)
