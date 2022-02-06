@@ -1,19 +1,20 @@
+from json.tool import main
 import django
 django.setup()
 import scrapy
 from scrapy.http import Request
 from movie.models import Movie, Comment, Genre
 from icecream import ic
+MOVIE_URL = 'https://www.filimo.com/cms/movie/loadmore/tagid/1000/more_type/infinity/show_serial_parent/1/perpage/200/page/'
+SERIE_URL = MOVIE_URL.replace('1000', '1001') # url of movie and serie are the same just 1000 is for movie and 1001 is for serie
 
 class FilimoLinksSpider(scrapy.Spider):
     type = 1 # type 0 is for movie and 1 is for series, it will be used in downloading pages
     name = 'filimo_links'
     # allowed_domains = ['https://www.filimo.com/']
-    main_url = 'https://www.filimo.com/cms/movie/loadmore/tagid/1000/more_type/infinity/show_serial_parent/1/perpage/200/page/'
-    start_urls = [main_url.replace('1000', '1001'), main_url] # 1000 is for movie , 1001 is for series
-    page_number = 0
+    start_urls = [MOVIE_URL+ str(page) for page in range(1,55)] + [SERIE_URL+str(page) for page in range(1,10) ] 
 
-    def parse(self, response):
+    def parse(self, response):  
         """find all movie page link and pass it to detail parsers"""
 
         print('************* in parse method in spider ************* \n\n\n\n')
@@ -25,20 +26,10 @@ class FilimoLinksSpider(scrapy.Spider):
             if not Movie.objects.filter(original_url = link).exists():
                 yield Request(link, callback=self.parse_movie_page)
             else:
-                print('duplicate url pass here')
+                ic('duplicate url pass here')
+        
 
-
-        # # for page_number in range(1, 50):
-        print(f'page in number ***********{self.page_number}********* \n')
-        self.page_number += 1
-        next_page = self.url + str(self.page_number)
-        max_page_number = 55 if '1000' in self.url else 10
-        ic(max_page_number)
-        for _ in range(max_page_number):
-            yield Request(next_page, callback=self.parse)
-
-        if self.page_number > 55:  # with 200 movies per page and the movie number of 10,000, which is the number of movies in fimilo
-            return None
+        return None
 
 
     def parse_movie_page(self, response):
@@ -115,4 +106,5 @@ class FilimoLinksSpider(scrapy.Spider):
             return Request(url=f'https://www.filimo.com{next_comment_page}', callback=self.parse_movie_comment, cb_kwargs=dict(movie_obj=movie_obj))
         else:
             return None
+
 
