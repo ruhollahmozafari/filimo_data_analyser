@@ -1,5 +1,4 @@
 from http.client import HTTPResponse
-from tkinter import E
 from django.shortcuts import render
 from django.views.generic import ListView, DeleteView
 from django.db.models import Q
