@@ -1,4 +1,4 @@
-<!doctype html>
+<!-- <!doctype html>
 {% load static %}
 <html lang="en" dir="rtl">
   <head>
@@ -262,10 +262,171 @@
     </div>
 
 
-        <!-- Scripts -->
+        Scripts
         <script src="{% static 'movie_page/js/jquery.min.js' %}"></script>
         <script src="{% static 'movie_page/js/slick.min.js' %}"></script>
         <script src="{% static 'movie_page/js/main.js' %}"></script>
 
     </body>
-    </html>
+    </html> -->
+
+
+
+
+    <!doctype html>
+    {% load static %}
+    <html lang="en" dir="rtl">
+      <head>
+          <title>Movies Review</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href=" {% static 'main/list.css' %}">
+        <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700' rel='stylesheet' type='text/css'>
+        
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.rtl.min.css" integrity="sha384-gXt9imSW0VcJVHezoNQsP+TNrjYXoGcrqBZJpry9zJt8PCQjobwmhMGaDHTASo9N" crossorigin="anonymous">
+        
+        <link rel="stylesheet" href=  "{% static 'main/style.css' %%}">
+        <link rel="stylesheet" href=  "{% static 'navbar/css/style.css'%}">
+        
+        <link rel="stylesheet" href=  "{% static 'main/main/style.css' %%}">
+        <link rel="stylesheet" href=  "{% static 'main/navbar/css/style.css'%}">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href= "{% static 'movie_page/css/style.css' %}">
+        <link rel="stylesheet" href= "{% static 'movie_page/css/slick.css' %}">
+        <link rel="stylesheet" href="../static/main/style.css">
+        <title>Author</title>
+        
+    </head>
+    
+    <body>
+        <div class="container">
+            <nav class="navbar navbar-expand-lg ftco_navbar ftco-navbar-light" id="ftco-navbar">
+                <div class="container d-flex justify-content-between">
+                    <form class="d-flex position-relative" action="{% url 'movie:search-results' %}" method="get">
+                        <input class="py-2 px-4" style="width: 17rem; border: 1px solid #00B4A8; border-radius: 40px;" name = 'keywords' type="search" placeholder="جستجو" aria-label="Search">
+                        <button class="position-absolute" style="bottom: .4rem; left: .5rem; background: #fff; border: none; color: #00B4A8;" type="submit">
+                            <svg width="28" height="28" viewBox="0 0 41 41" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect x="0.987793" y="0.751282" width="40" height="40" fill="white"/>
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M7.71911 25.8674C2.64229 20.7906 2.64229 12.5594 7.71911 7.4826C12.7959 2.40578 21.0271 2.40578 26.1039 7.4826C31.1807 12.5594 31.1807 20.7906 26.1039 25.8674C21.0271 30.9442 12.7959 30.9442 7.71911 25.8674ZM6.3049 6.06839C0.447033 11.9263 0.447033 21.4237 6.3049 27.2816C11.3106 32.2873 18.974 33.0155 24.753 29.4662L26.4574 31.1707L27.1646 31.8778L34.2356 38.9488C35.4072 40.1204 37.3067 40.1204 38.4783 38.9488L39.1854 38.2417C40.3569 37.0702 40.3569 35.1707 39.1854 33.9991L32.1143 26.928L31.4072 26.2209L29.7027 24.5164C33.252 18.7375 32.5238 11.0741 27.5181 6.06839C21.6602 0.210522 12.1628 0.210522 6.3049 6.06839ZM28.5264 26.1686C28.2122 26.552 27.8761 26.9236 27.5181 27.2816C27.1601 27.6396 26.7886 27.9757 26.4051 28.2899L27.1646 29.0493L29.2859 26.928L28.5264 26.1686ZM30.7001 28.3422L28.5788 30.4636L35.6498 37.5346C36.0404 37.9252 36.6735 37.9252 37.064 37.5346L37.7712 36.8275C38.1617 36.437 38.1617 35.8038 37.7712 35.4133L30.7001 28.3422ZM10.194 23.3925C6.48402 19.6825 6.48402 13.6675 10.194 9.95747C13.904 6.24749 19.9191 6.24749 23.629 9.95747C27.339 13.6675 27.339 19.6825 23.629 23.3925C19.9191 27.1025 13.904 27.1025 10.194 23.3925ZM8.77979 8.54326C4.28876 13.0343 4.28876 20.3157 8.77979 24.8067C13.2708 29.2977 20.5522 29.2977 25.0432 24.8067C29.5343 20.3157 29.5343 13.0343 25.0432 8.54326C20.5522 4.05223 13.2708 4.05223 8.77979 8.54326Z" fill="#00B4A8"/>
+                            </svg>
+                        </button>
+                    </form>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="fa fa-bars"></span> Menu
+                    </button>
+                    <div class="collapse navbar-collapse" id="ftco-nav">
+                        <ul class="navbar-nav ml-auto mr-md-3">
+                            <li class="nav-item active d-flex justify-content-center align-items-center px-2">
+                                <svg width="22" height="22" viewBox="0 0 36 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M19.2073 1.29021C18.4818 0.756781 17.4938 0.75678 16.7682 1.29021L1.11725 12.7971C0.721499 13.0881 0.487793 13.55 0.487793 14.0412L0.487797 17.6272C0.487798 18.4799 1.17912 19.1713 2.03191 19.1713H2.84073V33.0683C2.84073 33.9211 3.53206 34.6124 4.38485 34.6124H11.8113H12.2718H23.6496V34.6115C23.6675 34.6121 23.6856 34.6124 23.7037 34.6124H31.5907C32.4435 34.6124 33.1349 33.9211 33.1349 33.0683V19.1713H33.9437C34.7965 19.1713 35.4878 18.4799 35.4878 17.6271V14.0412C35.4878 13.55 35.2541 13.0881 34.8583 12.7971L19.2073 1.29021ZM22.1596 32.5536H13.816V20.2007H22.1596V32.5536ZM17.9878 2.94896L33.429 14.3016V17.1124H32.2381L18.6198 6.52046L17.9992 6.03775L17.3701 6.5095L3.23289 17.1124H2.54662L2.54662 14.3016L17.9878 2.94896ZM4.89956 18.436L17.9764 8.62832L31.076 18.8169V32.5536H24.2184V19.686C24.2184 18.8332 23.5271 18.1419 22.6743 18.1419H13.3013C12.4485 18.1419 11.7571 18.8332 11.7571 19.686V32.5536H4.89956V18.436ZM21.1406 25.1755C21.1406 24.595 20.6701 24.1245 20.0897 24.1245C19.5093 24.1245 19.0387 24.595 19.0387 25.1755V27.2774C19.0387 27.8578 19.5093 28.3283 20.0897 28.3283C20.6701 28.3283 21.1406 27.8578 21.1406 27.2774V25.1755Z" fill="#00B4A8"/>
+                                </svg>
+                                <a href="/list/" class="nav-link text-dark">صفحه اصلی</a>
+                            </li>
+                            <li class="nav-item d-flex justify-content-start align-items-center px-2">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M19.82 2H4.18C2.97602 2 2 2.97602 2 4.18V19.82C2 21.024 2.97602 22 4.18 22H19.82C21.024 22 22 21.024 22 19.82V4.18C22 2.97602 21.024 2 19.82 2Z" stroke="#00B4A8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M7 2V22" stroke="#00B4A8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M17 2V22" stroke="#00B4A8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M2 12H22" stroke="#00B4A8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M2 7H7" stroke="#00B4A8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M2 17H7" stroke="#00B4A8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M17 17H22" stroke="#00B4A8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M17 7H22" stroke="#00B4A8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                <a href="/list/" class="nav-link text-dark">فیلم ها</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>  
+    
+          <div  class="d-flex justify-content-center py-4  mt-4" style="gap: 3rem;">
+              <div class="col-4">
+                <img src = {{movie.image_url}} class="img-fluid" alt="" style="width: 17rem; border-radius: 10px;">
+              </div>
+    
+                 <div class="col-4">
+                     
+                    <h4 class="card-title text-right mt-2" style="color: #00B4A8; font-weight: bold;" dir="rtl" >{{movie.ename}}</h4>
+                    <div class="d-flex align-items-baseline">
+                        <p style="background: #00B4A8;  width: .5rem; height: .5rem; border-radius: 50px"></p>
+                        <p style="font-size: .8rem" class="m-0 ps-1 pe-3">ژانر فیلم:</p>
+                        <p style="font-size: .8rem" class="m-0">	
+                            {% for genre in movie.genres.all %}
+                            {{ genre.fname}}
+                            {% endfor %}    		
+                        </p>
+                    </div>
+                    <div class="d-flex align-items-baseline">
+                        <p style="background: #00B4A8;  width: .5rem; height: .5rem; border-radius: 50px"></p>
+                        <p style="font-size: .8rem" class="m-0 ps-1 pe-3">نمره imdb</p>
+                        <p style="font-size: .8rem" class="m-0">{{movie.imdb_rating}}</p>
+                    </div>
+                    <div class="d-flex  align-items-baseline">
+                        <p style="background: #00B4A8;  width: .5rem; height: .5rem; border-radius: 50px"></p>
+                        <p style="font-size: .8rem" class="m-0 ps-1 pe-3">نمره فیلیمو</p>
+                        <p style="font-size: .8rem" class="m-0">{{movie.filimo_rating}}</p>
+                    </div>
+                    <div class="d-flex  align-items-baseline">
+                        <p style="background: #00B4A8;  width: .5rem; height: .5rem; border-radius: 50px"></p>
+                        <p style="font-size: .8rem" class="m-0 ps-1 pe-3">تعداد کل نظرات</p>
+                        <p style="font-size: .8rem" class="m-0">{{ movie.comment_movie.all.count}}</p>
+                    </div>
+                    <div class="d-flex  align-items-baseline">
+                        <p style="background: #00B4A8;  width: .5rem; height: .5rem; border-radius: 50px"></p>
+                        <p style="font-size: .8rem" class="m-0 ps-1 pe-3">مجموع نظرات کامنت ها</p>
+                        <p style="font-size: .8rem" class="m-0">{{movie.sentiment}}</p>
+                    </div>
+                    <div class="d-flex  align-items-baseline">
+                        <p style="background: #00B4A8;  width: .5rem; height: .5rem; border-radius: 50px"></p>
+                        <p style="font-size: .8rem" class="m-0 ps-1 pe-3">sentinet details</p>
+                        <p style="font-size: .8rem" class="m-0">{{ movie.sentiment_detail }}</p>
+                    </div>
+    
+                    
+              </div>
+    
+          </div>
+          <p class="card-text text-right" dir="rtl" style="font-size: 1rem; padding: 0 10rem; margin-bottom: 4rem">{{movie.summary}}</p>
+    
+          <p style="text-align: right; padding: 0 3rem;">نظرات کاربران</p>
+    
+            {%for comment in movie.comment_movie.all %}
+    
+    
+            
+            <div class="d-flex justify-content-start w-100 p-2 m-3" style="border: 1px solid #00B4A8; border-radius: 40px;">
+                <div class="d-flex justify-content-center align-items-center" style="width: 37px; height: 35px; background: #D1D1D3; border-radius: 50px; margin: 10px 10px; ">
+                    <svg width="25" height="25" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M18 19V17.3333C18 16.4493 17.6839 15.6014 17.1213 14.9763C16.5587 14.3512 15.7956 14 15 14H9C8.20435 14 7.44129 14.3512 6.87868 14.9763C6.31607 15.6014 6 16.4493 6 17.3333V19" stroke="#57575E" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M12 11C13.6569 11 15 9.65686 15 8C15 6.34315 13.6569 5 12 5C10.3431 5 9 6.34315 9 8C9 9.65686 10.3431 11 12 11Z" stroke="#57575E" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <div class="w-100">
+                    <div class="d-flex justify-content-between">
+                        <p class="m-0"> {{ comment.date}} {{ comment.polarity }} </p>
+                        <div class="d-flex align-items-center m-0 px-3" style="gap: '1rem">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" stroke="#FFCE38" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>   
+                            <p style="margin: 0; padding-left: 1rem;">            {{comment.vote_up}}</p>
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" stroke="red" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>          
+                            <p style="margin: 0;">{{comment.vote_down}} </p>
+                        </div>
+                    </div>
+                    <p class="m-0" style="padding:  0 1rem; text-align: right;"> {{ comment.text }} {{ comment.e_text}}</p>
+                </div>
+            </div>
+            {% endfor %} 
+    
+            <!-- Scripts -->
+            <script src="{% static 'movie_page/js/jquery.min.js' %}"></script>
+            <script src="{% static 'movie_page/js/slick.min.js' %}"></script>
+            <script src="{% static 'movie_page/js/main.js' %}"></script>
+    
+        </body>
+        </html>
+    
