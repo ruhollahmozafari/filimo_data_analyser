@@ -23,6 +23,8 @@ downloads/
 eggs/
 .eggs/
 lib/
+all_data.json
+all_data
 lib64/
 parts/
 sdist/

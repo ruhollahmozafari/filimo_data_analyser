@@ -17,7 +17,6 @@ from textblob import TextBlob
 from googletrans import Translator, constants
 translator = Translator()
 
-
 # Create your views here.
 class ListMovie(ListView):
     model = Movie
@@ -61,7 +60,6 @@ class SearchResultView(ListView):
 
 class MoviePageView(DetailView):
 
-
     model = Movie
     template_name = 'movie_page.html'
     context_object_name = 'movie'
@@ -103,6 +101,7 @@ class MoviePageView(DetailView):
         return object_list
     
     def get(self, request , *args, **kwargs):
+        """if sentiment part is done just pass the data, else go for sentiment and then pass the data"""
         movie = Movie.objects.get(id = kwargs['pk'])
         if  movie.sentiment == None:
             self.get_polarity(movie)
@@ -112,7 +111,5 @@ class MoviePageView(DetailView):
             ic('passing the sentiment since it is full ')
             pass 
         return super().get(request, *args, **kwargs)
-
-
 
 
