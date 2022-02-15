@@ -439,3 +439,12 @@ a, a:hover {
     opacity: 1 !important;
   }
 }
+
+
+.height-hover{
+  p{
+    &:hover{
+      color: #fff !important;
+    }
+  }
+}

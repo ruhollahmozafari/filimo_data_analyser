@@ -431,4 +431,8 @@ a, a:hover {
 .film-hover:hover {
   opacity: 1 !important;
 }
+
+.height-hover p:hover {
+  color: #fff !important;
+}
 /*# sourceMappingURL=style.css.map */
