@@ -76,29 +76,29 @@ TEMPLATES = [
 WSGI_APPLICATION = 'uni.wsgi.application'
 
 
-# DATABASES = {
-#     "default": {
-#         # Postgres Postgis database engin class.
-#         "ENGINE": "django.contrib.gis.db.backends.postgis",
-#         # Postgres database name.
-#         "NAME": "filimo_database",
-#         # Postgres database username.
-#         "USER": "postgres",
-#         # Postgres database pass.
-#         "PASSWORD": "MySt0ngDBP@ss",
-#         # db server ip
-#         "HOST": "localhost",
-#         # postgres port on db server
-#         "PORT": "5432",  # s
-#     },
-# }
-
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db1.sqlite',
-    }
+    "default": {
+        # Postgres Postgis database engin class.
+        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        # Postgres database name.
+        "NAME": "filimo_database",
+        # Postgres database username.
+        "USER": "root",
+        # Postgres database pass.
+        "PASSWORD": "root",
+        # db server ip
+        "HOST": "localhost",
+        # postgres port on db server
+        "PORT": "5432",  # s
+    },
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db1.sqlite',
+#     }
+# }
 
 ELASTICSEARCH_DSL = {
     "default": {
