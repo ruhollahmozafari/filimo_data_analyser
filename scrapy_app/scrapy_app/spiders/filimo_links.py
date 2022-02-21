@@ -5,7 +5,7 @@ import django
 django.setup()
 from movie.models import Movie, Comment, Genre
 # url of movie and serie are the same just 1000 is for movie and 1001 is for serie
-MOVIE_URL = 'https://www.filimo.com/cms/movie/loadmore/tagid/1000/more_type/infinity/show_serial_parent/1/perpage/100/page/'
+MOVIE_URL = 'https://www.filimo.com/cms/movie/loadmore/tagid/1000/more_type/infinity/show_serial_parent/1/perpage/200/page/'
 SERIE_URL = MOVIE_URL.replace('1000', '1001')
 
 
@@ -37,16 +37,15 @@ csspath = CSSPathSource()
 class FilimoLinksSpider(scrapy.Spider):
     type = 1  # type 0 is for movie and 1 is for series, it will be used in downloading pages
     name = 'filimo_links'
-    start_urls = [MOVIE_URL + str(page) for page in range(1, 2)]
+    start_urls = [MOVIE_URL + str(page) for page in range(1, 55)] + [SERIE_URL+str(page) for page in range(1,20)]
 
     def parse(self, response):
         """find all movie page link and pass it to detail parsers"""
 
         print('************* in parse method in spider ************* \n\n')
-        Movie.objects.all().delete()
         links = response.css(csspath.movie_links_path).getall()
         for link in links:  # for each links found in movie/series list, send a request with that link to parse in movie page
-            if not Movie.objects.filter(original_url=link).exists() and 'zg1xo' in link:#TODO: just for testing remove the second if
+            if not Movie.objects.filter(original_url=link).exists():#TODO: just for testing remove the second if
                 yield Request(link, callback=self.parse_movie_page)
             else:  # TODO: pass it all in case of facing the first duplicate movie
                 # ic('duplicate url pass here')
@@ -120,4 +119,3 @@ class FilimoLinksSpider(scrapy.Spider):
                 )
                 c.save()
         return None
-
