@@ -112,7 +112,7 @@ class MoviePageView(DetailView):
             # self.get_polarity(movie)
             # ic('goin for the sentiment ')
         else:
-            # self.get_polarity(movie)
+            # self. (movie)
             # ic('passing the sentiment since it is full ')
             pass 
         return super().get(request, *args, **kwargs)
