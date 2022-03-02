@@ -1,3 +1,9 @@
+from google_trans_new import google_translator
+import time
+from multiprocessing.dummy import Pool as ThreadPool
+from .serializers import *
+import pandas as pd
+import requests
 from http.client import HTTPResponse
 from django.shortcuts import render
 from django.views.generic import ListView, DeleteView
@@ -15,22 +21,117 @@ from .documents import MovieDocument
 from icecream import ic
 from textblob import TextBlob
 from googletrans import Translator, constants
+import json
+import emoji
+from django.db.models.functions import Length
+action = 'google'
+lang = 'en'
+
 translator = Translator()
-token = '323029:6207f9f1b658a8.51282896'
-import requests
+token = '323029:621bbc1d8dfe02.87566886'
+
+def comment_traslator(movie):
+    pool = ThreadPool(10)  # Threads
+    ic('\n in the main comment handler \n')
+    ic(movie)
+    n = 4  # sub list comment lenght
+    all_comments = movie.comment_movie.all().annotate(
+        text_len=Length("text")).filter(text_len__lt=120).filter(e_text__isnull = True)
+    ic(len(all_comments))
+    sub_list_comment = [all_comments[i:i + n]for i in range(0, len(all_comments), n)]
+    ic(len((sub_list_comment)))
+
+    # TODO: for big comments 
+    all_comments = movie.comment_movie.all()
+    large_size_comment = all_comments.annotate(
+        text_len=Length("text")).filter(text_len__gte=120, e_text__isnull =  True)
+    sub_list_comment += [[c] for c in large_size_comment]
+    ic(sub_list_comment)
+
+    try:
+        results = pool.map(my_translator, sub_list_comment)
+        pass
+    except Exception as e:
+        raise e
+    pool.close()
+    pool.join()
+    time2 = time.time()
+    return True
+
+       
+def my_translator(comments):
+    print('\n ****** inside the my translator ****** \n')
+        # if yes the size of the comment is not supported for microsoft api so use google 
+    if len(comments) ==1 :
+        print('going for the big comments\n\n') 
+        comment = comments[0]
+        ic(comment)
+        query = comment.text
+        url = f'https://one-api.ir/translate/?token={token}&action={action}&lang={lang}&q={query}'
+        r = requests.get(url = url, timeout = 4 )
+        ic('the result of the response')
+        comment.e_text = r.json().get('result')
+        comment.save()
+    # using microsoft data mining 
+    else:
+        payload = [{'text': emoji.get_emoji_regexp().sub(u'', comment.text)}
+                for comment in comments]
+        ic(payload)
+
+        # send requests for microsoft translation 
+        url = "https://microsoft-translator-text.p.rapidapi.com/translate"
+        querystring = {"to": "en", "api-version": "3.0",
+                    "profanityAction": "NoAction", "textType": "plain"}
+        payload = json.dumps(payload)
+        headers = {
+            'content-type': "application/json",
+            'x-rapidapi-host': "microsoft-translator-text.p.rapidapi.com",
+            'x-rapidapi-key': "c10a3b3468mshea11bdae26f5911p1d9d13jsn108dd8377a12"
+        }
+        response = requests.request(
+            "POST", url, data=payload, headers=headers, params=querystring)
+        # e_comments = response.json()[0].get("translations")[0]["text"].split('@')
+        # print('len of e comments :', len(e_comments))
+        # return None
+        for item, comment in zip(response.json(), comments):
+            print('looooooooop for  comments')
+            t = item.get("translations")[0]["text"]
+            print('farsi comment', comment.text)
+            print('english comment', t)
+
+            comment.e_text = t
+            comment.save()
+
+    return True
+
+
+def trans_eng(comment):
+    ic()
+    lang = "en"
+    t = google_translator(timeout=5)
+    if comment.text in [None, '', ' ']:
+        return None
+    translate_text = t.translate(comment.text, lang)
+    ic(type(translate_text))
+    comment.e_text = translate_text
+    ic('saving the etext for the transatler')
+    Comment.save()
+    return translate_text
 
 # Create your views here.
+
+
 class ListMovie(ListView):
     model = Movie
     template_name = 'main.html'
     context_object_name = 'movies'
     paginate_by = 18
     ordering = ('-id')
-    
+
     # def get_context_data(self, **kwargs):
-        # context = super(QuestionsInTags,self).get_context_data(**kwargs)
-        # context["main_tag"]= self.tag
-        # return context
+    # context = super(QuestionsInTags,self).get_context_data(**kwargs)
+    # context["main_tag"]= self.tag
+    # return context
 
 
 class SearchResultView(ListView):
@@ -39,25 +140,25 @@ class SearchResultView(ListView):
     template_name = 'search_result.html'
     context_object_name = 'movies'
     paginate_by = 500
+
     def get_queryset(self):
         query = self.request.GET.get('keywords', None)
         q = elastic_Q(
             'multi_match',
             query=query,
             fields=[
-            'ename',
-            'fname'])
-        
+                'ename',
+                'fname'])
+
         search = MovieDocument.search()[0:200].query(q)
-        resp =  search.execute()
+        resp = search.execute()
         ic(resp.hits.total)
         ic(len(resp.hits))
         return resp.hits
 
-        # object_list = Movie.objects.filter(Q (ename__icontains=query) 
+        # object_list = Movie.objects.filter(Q (ename__icontains=query)
         # | Q(fname__icontains = query)).order_by('id')
         # return object_list
-
 
 
 class MoviePageView(DetailView):
@@ -65,56 +166,56 @@ class MoviePageView(DetailView):
     model = Movie
     template_name = 'movie_page.html'
     context_object_name = 'movie'
-    # def get_polarity(self,movie):
-    #     ic()
-    #     result = {-1:0, -0.5 : 0 , 0:0, 0.5:0, 1:0} # calculated number of 
-    #     points = [-1, -0.5, 0, 0.5, 1 ]
-    #     estring = ''
-    #     for comment in movie.comment_movie.all(): 
-    #         r = reqeusts.get('https://one-api.ir/translate/?token=323029:6207f9f1b658a8.51282896&action=google&lang=en&q={comment.text}')
-            
-    #     print('this is the ')   
-    #     translation = translator.translate(estring , dest ="en", src="fa")
-    #     ecomments = translation.text.split('@')
+    def get_polarity(self,movie):
+        ic()
+        result = {-1:0, -0.5 : 0 , 0:0, 0.5:0, 1:0} # calculated number of
+        points = [-1, -0.5, 0, 0.5, 1 ]
+        
 
-    #     print('this is the len of ecommnte s',len(ecomments))
-    #     print('this is the len of the movie comments',len(movie.comment_movie.all()))
-
-    #     for indexer, comment in enumerate(movie.comment_movie.all()):
-    #         comment_polarity = TextBlob(ecomments[indexer]).sentiment.polarity
-    #         for indx in range(4):
-    #             if  points[indx] < comment_polarity <= points[indx+1]:
-    #                 result[points[indx+1]]+=1
-    #                 break
-    #         comment.polarity = comment_polarity
-    #         comment.e_text = ecomments[indexer]
-    #         comment.save()
-    #         # ic()
-    #         # ic(comment)
-    #         # ic(comment_polarity)
-    #         # ic('----------------------')
-    #     # end of getting sentiment for each comment , now  get an average of them based on the number and like and dislike
-    #     average_rating = sum([k*v for k,v in result.items()]) / sum([i for i in result.values()])
-    #     movie.sentiment = int(round(average_rating, 3)*100)  # get a total average of sentiments 
-    #     movie.sentiment_detail = result
-    #     movie.save()
-    #     return None
+        for comment in movie.comment_movie.all():
+            comment_polarity = TextBlob(comment.e_text).sentiment.polarity
+            for indx in range(4):
+                if  points[indx] < comment_polarity <= points[indx+1]:
+                    result[points[indx+1]]+=1
+                    break
+            comment.polarity = comment_polarity
+            comment.save()
+        average_rating = sum([k*v for k,v in result.items()]) / sum([i for i in result.values()])
+        movie.sentiment = int(round(average_rating, 3)*100)  # get a total average of sentiments
+        movie.sentiment_detail = result
+        movie.save()
+        return None
 
     def get_queryset(self):
-        object_list = Movie.objects.filter(id = self.kwargs['pk'])
+        object_list = Movie.objects.filter(id=self.kwargs['pk'])
         return object_list
-    
-    def get(self, request , *args, **kwargs):
+
+    def get(self, request, *args, **kwargs):
         """if sentiment part is done just pass the data, else go for sentiment and then pass the data"""
-        movie = Movie.objects.get(id = kwargs['pk'])
-        if  movie.sentiment == None:
+        movie = Movie.objects.get(id=kwargs['pk'])
+        if movie.sentiment == None:
             pass
             # self.get_polarity(movie)
             # ic('goin for the sentiment ')
         else:
             # self. (movie)
             # ic('passing the sentiment since it is full ')
-            pass 
+            pass
+        ic(movie)
+        if movie.comment_movie.filter(e_text__isnull =True,).exists():
+            comment_traslator(movie)
+        
+        if movie.comment_movie.filter(polarity__isnull = True):
+                self.get_polarity(movie)
+                pass
+        
         return super().get(request, *args, **kwargs)
+
+
+# get numbers of comment into a excel file to read
+        # cs = Comment.objects.all()[:200]
+        # ser = CommentExcelSerializer(cs, many = True)
+        # df = pd.DataFrame(ser.data)
+        # df.to_excel('first 1000 comments.xlsx', encoding="UTF-8", index=False)
 
 
