@@ -24,29 +24,31 @@ from googletrans import Translator, constants
 import json
 import emoji
 from django.db.models.functions import Length
+import datetime
 action = 'google'
 lang = 'en'
+
+from functools import wraps
+from time import process_time
 
 translator = Translator()
 token = '323029:621bbc1d8dfe02.87566886'
 
+
+
 def comment_traslator(movie):
-    pool = ThreadPool(10)  # Threads
-    ic('\n in the main comment handler \n')
-    ic(movie)
+    pool = ThreadPool(40)  # Threads
+    print('\n in the main comment handler \n')
     n = 4  # sub list comment lenght
     all_comments = movie.comment_movie.all().annotate(
-        text_len=Length("text")).filter(text_len__lt=120).filter(e_text__isnull = True)
-    ic(len(all_comments))
+        text_len=Length("text")).filter(text_len__lt=120)#TODO: put the filter of non-translated
     sub_list_comment = [all_comments[i:i + n]for i in range(0, len(all_comments), n)]
-    ic(len((sub_list_comment)))
 
     # TODO: for big comments 
     all_comments = movie.comment_movie.all()
     large_size_comment = all_comments.annotate(
-        text_len=Length("text")).filter(text_len__gte=120, e_text__isnull =  True)
+        text_len=Length("text")).filter(text_len__gte=120,)#TODO put the filter of non-translated
     sub_list_comment += [[c] for c in large_size_comment]
-    ic(sub_list_comment)
 
     try:
         results = pool.map(my_translator, sub_list_comment)
@@ -65,18 +67,15 @@ def my_translator(comments):
     if len(comments) ==1 :
         print('going for the big comments\n\n') 
         comment = comments[0]
-        ic(comment)
         query = comment.text
         url = f'https://one-api.ir/translate/?token={token}&action={action}&lang={lang}&q={query}'
         r = requests.get(url = url, timeout = 4 )
-        ic('the result of the response')
         comment.e_text = r.json().get('result')
         comment.save()
     # using microsoft data mining 
     else:
         payload = [{'text': emoji.get_emoji_regexp().sub(u'', comment.text)}
                 for comment in comments]
-        ic(payload)
 
         # send requests for microsoft translation 
         url = "https://microsoft-translator-text.p.rapidapi.com/translate"
@@ -106,15 +105,12 @@ def my_translator(comments):
 
 
 def trans_eng(comment):
-    ic()
     lang = "en"
     t = google_translator(timeout=5)
     if comment.text in [None, '', ' ']:
         return None
     translate_text = t.translate(comment.text, lang)
-    ic(type(translate_text))
     comment.e_text = translate_text
-    ic('saving the etext for the transatler')
     Comment.save()
     return translate_text
 
@@ -152,8 +148,6 @@ class SearchResultView(ListView):
 
         search = MovieDocument.search()[0:200].query(q)
         resp = search.execute()
-        ic(resp.hits.total)
-        ic(len(resp.hits))
         return resp.hits
 
         # object_list = Movie.objects.filter(Q (ename__icontains=query)
@@ -166,8 +160,8 @@ class MoviePageView(DetailView):
     model = Movie
     template_name = 'movie_page.html'
     context_object_name = 'movie'
-    def get_polarity(self,movie):
-        ic()
+    def get_polarity(self,movie):# TODO put filter only on uncalculated comments
+
         result = {-1:0, -0.5 : 0 , 0:0, 0.5:0, 1:0} # calculated number of
         points = [-1, -0.5, 0, 0.5, 1 ]
         
@@ -189,26 +183,18 @@ class MoviePageView(DetailView):
     def get_queryset(self):
         object_list = Movie.objects.filter(id=self.kwargs['pk'])
         return object_list
-
     def get(self, request, *args, **kwargs):
         """if sentiment part is done just pass the data, else go for sentiment and then pass the data"""
+        
         movie = Movie.objects.get(id=kwargs['pk'])
-        if movie.sentiment == None:
-            pass
-            # self.get_polarity(movie)
-            # ic('goin for the sentiment ')
-        else:
-            # self. (movie)
-            # ic('passing the sentiment since it is full ')
-            pass
-        ic(movie)
-        if movie.comment_movie.filter(e_text__isnull =True,).exists():
-            comment_traslator(movie)
+        t1 = datetime.datetime.now()
         
-        if movie.comment_movie.filter(polarity__isnull = True):
-                self.get_polarity(movie)
-                pass
-        
+        # if the sentiment analysis has not done for this movie
+        if not movie.sentiment:
+            comment_traslator(movie)        
+            self.get_polarity(movie)
+        ic(datetime.datetime.now()- t1)
+
         return super().get(request, *args, **kwargs)
 
 
