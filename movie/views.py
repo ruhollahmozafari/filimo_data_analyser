@@ -19,7 +19,7 @@ from textblob import TextBlob
 import json
 import emoji
 from django.db.models.functions import Length
-import datetime
+
 
 class Translation():
     """Handle translation using different api for a movie"""
@@ -28,9 +28,9 @@ class Translation():
     token = '323029:621bbc1d8dfe02.87566886'
     rapid_api_key = 'c10a3b3468mshea11bdae26f5911p1d9d13jsn108dd8377a12'
 
-    def comment_traslator(self, movie):
+    def comment_translator(self, movie):
         """after get the comment of a movie, translation process into a threatpool"""
-        pool = ThreadPool(10)  # Threads
+        pool = ThreadPool(8)  # Threads
         n = 4  # sub list comment lenght
         # we create two list , one including comments with size of smaller than 120 and other bigger tham 
         all_comments = movie.comment_movie.all().annotate(
@@ -77,7 +77,7 @@ class Translation():
                 'x-rapidapi-key': self.rapid_api_key 
             }
             response = requests.request(
-                "POST", url, data=payload, headers=headers, params=querystring)
+                "POST", url, data=payload, headers=headers, params=querystring, timeout = 4)
 
             for item, comment in zip(response.json(), comments):
                 t = item.get("translations")[0]["text"]
@@ -94,7 +94,7 @@ class Sentiment():
 
         comments = list(movie.comment_movie.all())
 
-        pool = ThreadPool(10)  # Threads
+        pool = ThreadPool(8)  # Threads
         try:
             results = pool.map(self.get_sentiment_by_api, comments)
             pass
@@ -137,7 +137,7 @@ class MoviePageView(DetailView):
 
         # if the sentiment analysis has not done for this movie
         if not movie.sentiment:
-            self.translation_class.comment_traslator(movie = movie)        
+            self.translation_class.comment_translator(movie = movie)        
             self.sentiment_class.get_polarity(movie)
             pass
 

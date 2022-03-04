@@ -81,19 +81,44 @@ class Movie(models.Model):
         return comments
 
     def number_very_bad_comment(self):
-        return self.sentiment_detail.get('-1', 0) if self.sentiment_detail else 0
+        return int(self.sentiment_detail.get('-1', 0)) if self.sentiment_detail else 0
 
     def number_bad_comment(self):
-        return self.sentiment_detail.get('-0.5', 0) if self.sentiment_detail else 0
+        return int(self.sentiment_detail.get('-0.5', 0)) if self.sentiment_detail else 0
 
     def number_good_comment(self):
-        return self.sentiment_detail.get('0.5', 0) if self.sentiment_detail else 0
+        return int(self.sentiment_detail.get('0.5', 0)) if self.sentiment_detail else 0
 
     def number_very_good_comment(self):
-        return self.sentiment_detail.get('1', 0) if self.sentiment_detail else 0
+        return int(self.sentiment_detail.get('1', 0)) if self.sentiment_detail else 0
 
     def number_of_zero_comment(self):
-        return self.sentiment_detail.get('0', 0) if self.sentiment_detail else 0
+        return int(self.sentiment_detail.get('0', 0)) if self.sentiment_detail else 0
+
+    def biggest_comment_number(self,):
+        return self.sentiment_detail.get(max(self.sentiment_detail))
+
+    def number_very_bad_comment_perc(self):
+        t = int(self.sentiment_detail.get('-1', 0)) /  self.biggest_comment_number() *100
+        return int(t) if self.sentiment_detail else 0
+
+    def number_bad_comment_perc(self):
+        t = int(self.sentiment_detail.get('-0.5', 0)) / self.biggest_comment_number() *100
+        return int(t) if self.sentiment_detail else 0
+
+    def number_good_comment_perc(self):
+        t = int(self.sentiment_detail.get('0.5', 0)) /self.biggest_comment_number() *100
+        return int(t) if self.sentiment_detail else 0
+
+    def number_very_good_comment_perc(self):
+        t = int(self.sentiment_detail.get('1', 0)) / self.biggest_comment_number() *100
+        return int(t) if self.sentiment_detail else 0
+
+    def number_of_zero_comment_perc(self):
+        t = int(self.sentiment_detail.get('0', 0)) / self.biggest_comment_number() * 100 
+        return int(t) if self.sentiment_detail else 0
+
+
 
 
 class Comment(models.Model):
@@ -111,3 +136,6 @@ class Comment(models.Model):
     # start_testing = models.IntegerField(blank=True, null= True)
     def __str__(self) -> str:
         return str(self.id) + self.text[:100] if self.text else f'comment'
+
+
+

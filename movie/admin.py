@@ -14,7 +14,7 @@ class MovieAdmin(admin.ModelAdmin):
 
 
 # Register your models here.
-admin.site.register(Movie, MovieAdmin)
+admin.site.register(Movie,MovieAdmin)
 admin.site.register(Genre)
 admin.site.register(Comment)
 

@@ -1,4 +1,4 @@
-<!-- <!doctype html>
+<!doctype html>
 {% load static %}
 <html lang="en" dir="rtl">
   <head>
@@ -104,9 +104,6 @@
                     <p style="font-size: .8rem" class="m-0">{{movie.sentiment}}</p>
                 </div>
 
-                ----------------------  rating details ------------------------------
-
-
                 <div class="d-flex  align-items-baseline">
                     <p style="background: #00B4A8;  width: .5rem; height: .5rem; border-radius: 50px"></p>
                     <p style="font-size: .8rem" class="m-0 ps-1 pe-3">کامنت های بسیار بد </p>
@@ -142,13 +139,9 @@
             </div>
 
 
-
-
       </div>
       <p class="card-text text-right" dir="rtl" style="font-size: 1rem; padding: 0 10rem; margin-bottom: 4rem">{{movie.summary}}</p>
-
-
-	
+      
 
       <div class="row px-5 position-relative">
         <div class="col-3 position-sticky">
@@ -173,10 +166,10 @@
                                 <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" stroke="#FFCE38" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
                         </div>
-                        <p class="m-0">x</p>
+                        <p class="m-0">{{movie.number_very_good_comment}}</p>
                     </div>
                     <div class="progress my-2 mb-3" style="height: .8rem; border-radius: 5rem;">
-                        <div class="progress-bar pt-1" role="progressbar" style="width: 80%; background: #00B4A8;" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+                        <div class="progress-bar pt-1" role="progressbar" style="width: {{movie.number_very_good_comment_perc}}%; background: #00B4A8;" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
                 </div>
             
@@ -193,10 +186,10 @@
                                 <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" stroke="#FFCE38" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
                         </div>
-                        <p class="m-0">x</p>
+                        <p class="m-0">{{movie.number_good_comment}}</p>
                     </div>
                     <div class="progress my-2 mb-3" style="height: .8rem; border-radius: 5rem;">
-                        <div class="progress-bar pt-1" role="progressbar" style="width: 30%; background: #00B4A8;" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+                        <div class="progress-bar pt-1" role="progressbar" style="width: {{movie.number_good_comment_perc}}%; background: #00B4A8;" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
                 </div>
                 <div>
@@ -209,10 +202,10 @@
                                 <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" stroke="#FFCE38" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
                         </div>
-                        <p class="m-0">x</p>
+                        <p class="m-0">{{movie.number_of_zero_comment}}</p>
                     </div>
                     <div class="progress my-2 mb-3" style="height: .8rem; border-radius: 5rem;">
-                        <div class="progress-bar pt-1" role="progressbar" style="width: 25%; background: #00B4A8;" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+                        <div class="progress-bar pt-1" role="progressbar" style="width: {{movie.number_of_zero_comment_perc}}%; background: #00B4A8;" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
                 </div>
                 <div>
@@ -221,15 +214,33 @@
                             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" stroke="#FFCE38" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" stroke="#FFCE38" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
                         </div>
-                        <p class="m-0">x</p>
+                        <p class="m-0">{{movie.number_bad_comment}}</p>
                     </div>
                     <div class="progress my-2 mb-3" style="height: .8rem; border-radius: 5rem;">
-                        <div class="progress-bar pt-1" role="progressbar" style="width: 50%; background: #00B4A8;" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+                        <div class="progress-bar pt-1" role="progressbar" style="width: {{movie.number_bad_comment_perc}}%; background: #00B4A8;" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                </div>
+                <div>
+                    
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" stroke="#FFCE38" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <p class="m-0">{{movie.number_very_bad_comment}}</p>
+                    </div>
+                    <div class="progress my-2 mb-3" style="height: .8rem; border-radius: 5rem;">
+                        <div class="progress-bar pt-1" role="progressbar" style="width: {{movie.number_very_bad_comment_perc}}%; background: #00B4A8;" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
                 </div>
             </div>
         </div>
+
         <div class="col-8">
             {%for comment in movie.comment_movie.all %}
             <div class="d-flex justify-content-start w-100 p-2 m-3" style="border: 1px solid #00B4A8; border-radius: 40px;">
@@ -262,17 +273,16 @@
     </div>
 
 
-        Scripts
         <script src="{% static 'movie_page/js/jquery.min.js' %}"></script>
         <script src="{% static 'movie_page/js/slick.min.js' %}"></script>
         <script src="{% static 'movie_page/js/main.js' %}"></script>
 
     </body>
-    </html> -->
+    </html> 
 
 
 
-
+{% comment %} 
     <!doctype html>
     {% load static %}
     <html lang="en" dir="rtl">
@@ -429,4 +439,4 @@
     
         </body>
         </html>
-    
+     {% endcomment %}
