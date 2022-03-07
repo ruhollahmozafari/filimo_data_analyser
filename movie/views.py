@@ -1,17 +1,14 @@
-from google_trans_new import google_translator
 import time
 from multiprocessing.dummy import Pool as ThreadPool
 from .serializers import *
-import pandas as pd
 import requests
-from http.client import HTTPResponse
 from django.shortcuts import render
-from django.views.generic import ListView, DeleteView
+from django.views.generic import ListView
 from django.db.models import Q
 from django.views.decorators.http import require_POST, require_http_methods
 from django.views.generic.detail import DetailView
 import os
-from movie.models import Movie, Comment , Genre
+from movie.models import Movie
 from elasticsearch_dsl import Q as elastic_Q
 from .documents import MovieDocument
 from icecream import ic
