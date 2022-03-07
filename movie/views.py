@@ -26,7 +26,7 @@ class Translation():
     lang = 'en'
     action = 'google'
     token = '323029:621bbc1d8dfe02.87566886'
-    rapid_api_key = 'c10a3b3468mshea11bdae26f5911p1d9d13jsn108dd8377a12'
+    rapid_api_key = '16cfd5816fmsh6528f260d31df4ep14e514jsn0d846d6f14f5'
 
     def comment_translator(self, movie):
         """after get the comment of a movie, translation process into a threatpool"""
@@ -137,6 +137,7 @@ class MoviePageView(DetailView):
 
         # if the sentiment analysis has not done for this movie
         if not movie.sentiment:
+            ic(f'translation and sentiment the movie {movie}')
             self.translation_class.comment_translator(movie = movie)        
             self.sentiment_class.get_polarity(movie)
             pass
@@ -182,4 +183,11 @@ class SearchResultView(ListView):
         # object_list = Movie.objects.filter(Q (ename__icontains=query)
         # | Q(fname__icontains = query)).order_by('id')
         # return object_list
+
+
+        # get numbers of comment into a excel file to read
+        # cs = Comment.objects.filter(polarity__isnull = False)
+        # ser = CommentExcelSerializer(cs, many = True)
+        # df = pd.DataFrame(ser.data)
+        # df.to_excel('first 1000 comments.xlsx', encoding="UTF-8", index=False)
 
