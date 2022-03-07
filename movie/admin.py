@@ -8,9 +8,10 @@ class CommentInLine(admin.TabularInline):
     model = Comment
 
 class MovieAdmin(admin.ModelAdmin):
-    search_fiels = ("id", "fname", "ename")
-    list_display = ('id', 'fname', 'ename', )
-    inlines = [CommentInLine, ]
+    list_display = ('id', 'fname', 'ename', 'sentiment')
+    search_fields = ['id','fname', 'ename']
+    ordering =('id', 'sentiment')
+    # inlines = [CommentInLine, ]
 
 
 # Register your models here.

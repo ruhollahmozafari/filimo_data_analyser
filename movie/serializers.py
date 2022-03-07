@@ -5,7 +5,7 @@ from .models import Comment, Movie
 class CommentExcelSerializer(ModelSerializer):
     class Meta:
         model = Comment
-        fields = ['text']
+        fields = "__all__"
 
 
 
