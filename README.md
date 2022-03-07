@@ -24,12 +24,5 @@ the search engine just comment the elastic query in search view and uncomment th
 
 Any technical recommendation will be appricated kindly.
 
-
------------------------ 
-summary 
-type (movie/tvshow)
-genres (multiple parts )
-imdb_rating (6.5 )
-filimo_rating ( %87 )
-filimo_total_votes ( number of people voted for this movie)
+special thanks to Dr.AmirKhani.
 
