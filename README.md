@@ -1,5 +1,5 @@
 # Filimo Data Analyser
-### a djagno+scrapy project to collect over data of over 13,000 movies and tv-shows from the filimo.com website. 
+### a djagno+scrapy project to collect data of  20,000 movies and tv-shows and over 1.2 million comments from filimo.com website. 
 ## Installation
 after cloning, create an virtualenv and activate it by :
 ` pip3 install virtualenv`
