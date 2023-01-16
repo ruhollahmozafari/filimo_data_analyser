@@ -6,6 +6,7 @@ after cloning, create an virtualenv and activate it by :
 and 
 
 ` virtualenv venv`
+note that python 3.8 is required.
 
 `source venv/bin/activate`
 
@@ -22,6 +23,7 @@ for front end I'm using bootstrap and some custom css. In case optimizing the se
 `./manage.py search_index --rebuild` to store all the data in you elastic db. note that search bar uses elastic engine at the moment. if you tend to use postgre as 
 the search engine just comment the elastic query in search view and uncomment the query writen for postgre.
 
+A brief summary of project description and documentation is in file `filimo_report.pdf` check it  for more techninal details.
 Any technical recommendation will be appricated kindly.
 
 special thanks to Dr.AmirKhani.
